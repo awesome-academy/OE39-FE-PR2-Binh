@@ -4,6 +4,9 @@ import morgan from 'morgan';
 import bodyParser from 'body-parser';
 import cors from 'cors';
 import dotenv from 'dotenv';
+import categoryRouter from './routes/categoryRouter.js';
+import productRouter from './routes/productRouter.js';
+import userRouter from './routes/userRouter.js';
 
 dotenv.config();
 
@@ -23,6 +26,11 @@ mongoose
 app.use(morgan('dev'));
 app.use(bodyParser.json({ limit: '2mb' }));
 app.use(cors());
+
+// Router
+app.use('/api/categories', categoryRouter);
+app.use('/api/products', productRouter);
+app.use('/api/users', userRouter);
 
 // Test connect
 app.get('/', (req, res) => {
