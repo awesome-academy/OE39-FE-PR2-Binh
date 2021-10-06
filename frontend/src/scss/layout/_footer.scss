@@ -1,0 +1,112 @@
+.footer {
+  width: 100%;
+  font-weight: 300;
+  font-size: 1.4rem;
+  color: $paragraph-text;
+  background-color: $dark-text;
+
+  a {
+    color: inherit;
+  }
+
+  a:hover,
+  a:focus {
+    color: $primary-color;
+  }
+
+  &__title {
+    color: $white-color;
+    font-weight: 400;
+    font-size: 1.6rem;
+    letter-spacing: -0.01em;
+    margin-top: 0;
+    margin-bottom: 1.9rem;
+  }
+
+  &__logo {
+    width: 105px;
+    margin-bottom: 2rem;
+    margin-top: -0.8rem;
+
+    & ~ p {
+      max-width: 250px;
+      margin-bottom: 3.2rem;
+    }
+  }
+
+  figure {
+    margin: 0;
+  }
+}
+
+.footer__middle {
+  padding: 6.7rem 0 2.2rem;
+  border-top: 0.1rem solid $border-color;
+
+  ul {
+    li {
+      margin-top: 0.3rem;
+
+      &:first-child {
+        margin-top: 0;
+      }
+    }
+  }
+}
+
+.footer__bottom {
+  .container {
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+
+    &:before {
+      content: '';
+      display: block;
+      height: 1px;
+      position: absolute;
+      top: 0;
+      left: 10px;
+      right: 10px;
+      background-color: $border-color;
+      opacity: 0.2;
+    }
+  }
+}
+
+/* Scroll Top Button */
+#scroll-top {
+  width: 5rem;
+  height: 5rem;
+  position: fixed;
+  right: 50px;
+  bottom: 128px;
+  z-index: 11;
+  color: $light-text;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  line-height: 1;
+  visibility: hidden;
+  opacity: 0;
+  border-radius: 0;
+  border: none;
+  outline: none;
+  background-color: $bg-scroll-top;
+  font-size: 3rem;
+  transition: all 0.4s ease;
+  transform: translateY(60px);
+  -ms-transform: translateY(60px);
+}
+
+#scroll-top:hover,
+#scroll-top:focus {
+  color: $paragraph-text;
+  background-color: $bg-scroll-top-hover;
+}
+
+#scroll-top.show {
+  visibility: visible;
+  opacity: 1;
+  transform: translateY(0);
+}

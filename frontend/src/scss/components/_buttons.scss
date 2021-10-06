@@ -1,0 +1,82 @@
+/* Buttons */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 0.85rem 1.5rem;
+  font-weight: 400;
+  font-size: 1.4rem;
+  line-height: 1.5;
+  letter-spacing: -0.01em;
+  min-width: 170px;
+  border-radius: 0;
+  white-space: normal;
+  transition: all 0.3s;
+
+  span {
+    line-height: 1;
+  }
+
+  i {
+    &:first-child {
+      margin-right: 1rem;
+    }
+
+    &:last-child {
+      margin-left: 1rem;
+    }
+  }
+
+  &:focus {
+    box-shadow: none;
+  }
+
+  &:focus,
+  &:active {
+    outline: none !important;
+  }
+
+  &:active:focus {
+    box-shadow: none !important;
+  }
+}
+
+.btn:active {
+  outline: none;
+}
+
+.btn-primary {
+  @include button-variant(
+    $white-color,
+    $primary-color,
+    $primary-color,
+    $white-color,
+    $secondary-color,
+    $secondary-color
+  );
+}
+
+.btn-outline-primary {
+  @include button-outline-variant(
+    $primary-color,
+    $primary-color,
+    transparent,
+    $primary-color,
+    $border-color,
+    none,
+    0 5px 10px rgba(0, 0, 0, 0.05)
+  );
+}
+
+.btn-outline-white {
+  @include button-outline-variant(
+    $white-color,
+    $white-color,
+    $primary-color,
+    $white-color,
+    $primary-color,
+    none,
+    none
+  );
+}

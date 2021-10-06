@@ -13,6 +13,8 @@ $secondary-color-dark: #2f3946 !default;
 $link-color: $primary-color !default;
 $white-color: #fff !default;
 
+$box-shadow-color: #515151 !default;
+
 $border-radius: 0 !default;
 
 $body-text: #666666 !default;
@@ -22,9 +24,14 @@ $paragraph-text: #777 !default;
 $headings-text: $dark-text !default;
 
 $border-color: #ebebeb !default;
+$border-social-color: #e1e2e6 !default;
+
+$bg-scroll-top: #fafafa !default;
+$bg-scroll-top-hover: #eaeaea !default;
 
 $font-family: 'Poppins', sans-serif !default;
 $second-font-family: 'Quicksand', sans-serif !default;
+$font-line-awesome: 'Line Awesome Free', sans-serif !default;
 
 $breakpoints: (
   xs: 480px,

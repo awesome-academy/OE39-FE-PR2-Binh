@@ -1,0 +1,34 @@
+/* Social Icons */
+.social-icons {
+  display: flex;
+  align-items: center;
+  flex-flow: row wrap;
+}
+
+.social-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.6rem;
+  width: 4rem;
+  height: 4rem;
+  color: $paragraph-text;
+  margin: 0;
+  background-color: transparent;
+  border: 0.1rem solid $border-social-color;
+  border-radius: 50%;
+  text-decoration: none;
+  opacity: 1;
+  transition: all 0.35s ease;
+
+  &:not(:last-child) {
+    margin-right: 1rem;
+  }
+
+  &:hover,
+  &:focus {
+    color: $primary-color;
+    border-color: $primary-color;
+    background-color: transparent;
+  }
+}
