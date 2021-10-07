@@ -8,7 +8,7 @@ function ProductSkeleton(props) {
         <Skeleton height={'100%'} width={'100%'} />
       </figure>
 
-      <div className="product__body">
+      <div className="mt-1 p-2">
         <Skeleton count={4} />
       </div>
     </div>
