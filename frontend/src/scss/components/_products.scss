@@ -53,6 +53,7 @@
   opacity: 0;
   width: 100%;
   height: auto;
+  z-index: 3;
   transition: opacity 0.3s ease;
 }
 
@@ -427,14 +428,4 @@
       }
     }
   }
-}
-
-.lazy-overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
-  background-color: $bg-overlay;
-  z-index: 1;
 }

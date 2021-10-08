@@ -46,6 +46,13 @@
   outline: none;
 }
 
+.btn.btn-load-more {
+  text-transform: uppercase;
+  min-width: 190px;
+  justify-content: space-between;
+  padding: 1.2rem 2rem;
+}
+
 .btn-primary {
   @include button-variant(
     $white-color,
@@ -75,6 +82,18 @@
     $white-color,
     $primary-color,
     $white-color,
+    $primary-color,
+    none,
+    none
+  );
+}
+
+.btn-outline-darker {
+  @include button-outline-variant(
+    #333333,
+    #fff,
+    $primary-color,
+    #d7d7d7,
     $primary-color,
     none,
     none

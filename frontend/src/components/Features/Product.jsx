@@ -38,6 +38,18 @@ function Product({ product }) {
             effect="black and white"
             wrapperClassName="product__image"
           />
+
+          {product.images.length >= 2 ? (
+            <LazyLoadImage
+              alt={product.name}
+              src={product.images[1].url}
+              threshold={500}
+              effect="black and white"
+              wrapperClassName="product__image-hover"
+            />
+          ) : (
+            ''
+          )}
         </a>
 
         <div className="product__action-vertical">

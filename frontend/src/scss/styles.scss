@@ -13,6 +13,15 @@
 @import './components/socials';
 @import './components/products';
 @import './components/loadings';
+@import './components/cta';
+@import './components/icon-boxes';
+@import './components/banners';
+@import './components/heading';
+@import './components/tabs';
+@import './components/slider';
+@import './components/lazy-load';
 
 @import 'layout/header';
 @import 'layout/footer';
+
+@import 'pages/home';

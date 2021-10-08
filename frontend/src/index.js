@@ -5,6 +5,8 @@ import { BrowserRouter } from 'react-router-dom';
 import './scss/reset.scss';
 import './scss/line-awesome.scss';
 import 'bootstrap/scss/bootstrap.scss';
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
 import './scss/styles.scss';
 import reportWebVitals from './reportWebVitals';
 import { Provider } from 'react-redux';
