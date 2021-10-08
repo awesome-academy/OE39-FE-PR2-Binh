@@ -20,8 +20,11 @@
 @import './components/tabs';
 @import './components/slider';
 @import './components/lazy-load';
+@import './components/breadcrumb';
+@import './components/forms';
 
 @import 'layout/header';
 @import 'layout/footer';
 
 @import 'pages/home';
+@import 'pages/product';
