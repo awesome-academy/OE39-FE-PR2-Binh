@@ -1,4 +1,5 @@
 @import 'mixins/breakpoints';
+@import 'mixins/buttons';
 
 @import './base/variables';
 
@@ -7,3 +8,9 @@
 @import './base/spacing';
 @import './base/type';
 @import './base/fonts';
+
+@import './components/buttons';
+@import './components/socials';
+
+@import 'layout/header';
+@import 'layout/footer';
