@@ -58,6 +58,7 @@ function Signin(props) {
     };
 
     dispatch(signin(user));
+    setSignInData(initSignInData);
   }
 
   return (
