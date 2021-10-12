@@ -22,12 +22,25 @@ $light-text: #999999 !default;
 $dark-text: #333333 !default;
 $paragraph-text: #777 !default;
 $headings-text: $dark-text !default;
+$black-text: #000 !default;
+
+$product-label-sale: #ef837b !default;
+$product-label-new: #a6c76c !default;
+$product-label-top: #7dd2ea !default;
+$product-label-out: #ccc !default;
+
+$product-price-new: $product-label-sale !default;
+$product-price-old: $product-label-out !default;
+$product-price-out: $product-label-out !default;
+
+$product-rating-color: #fcb941 !default;
 
 $border-color: #ebebeb !default;
 $border-social-color: #e1e2e6 !default;
 
 $bg-scroll-top: #fafafa !default;
 $bg-scroll-top-hover: #eaeaea !default;
+$bg-overlay: #f4f4f4 !default;
 
 $font-family: 'Poppins', sans-serif !default;
 $second-font-family: 'Quicksand', sans-serif !default;
