@@ -1,3 +1,9 @@
+.loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .loading-overlay {
   position: fixed;
   top: 0;

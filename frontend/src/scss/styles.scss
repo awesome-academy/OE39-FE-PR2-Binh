@@ -26,6 +26,7 @@
 @import './components/tables.scss';
 @import './components/modals.scss';
 @import './components/steps.scss';
+@import './components/alert.scss';
 
 @import 'layout/header';
 @import 'layout/footer';
@@ -36,3 +37,4 @@
 @import 'pages/signin';
 @import 'pages/shipping';
 @import 'pages/payment';
+@import 'pages/placeorder';

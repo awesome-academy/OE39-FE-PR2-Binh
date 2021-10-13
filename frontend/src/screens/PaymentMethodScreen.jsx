@@ -16,6 +16,7 @@ function PaymentMethodScreen(props) {
     e.preventDefault();
 
     dispatch(savePaymentMethod(paymentMethod));
+    props.history.push('/user/placeorder');
   }
 
   const breadcrumb = [
