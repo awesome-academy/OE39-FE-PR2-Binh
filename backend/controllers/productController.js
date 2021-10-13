@@ -10,3 +10,12 @@ export const createSampleProducts = async (req, res) => {
     res.status(500).send({ message: 'Import Products Failed' });
   }
 };
+
+export const listProducts = async (req, res) => {
+  try {
+    const products = await Product.find({}).populate('categories');
+    res.send(products);
+  } catch (error) {
+    res.status(500).send({ message: 'No products found' });
+  }
+};
