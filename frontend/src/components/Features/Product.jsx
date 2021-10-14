@@ -2,19 +2,38 @@ import React from 'react';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import Rating from './Rating';
 
-function Product(props) {
+function Product({ product }) {
   return (
     <div className="product">
       <figure className="product__media">
-        <span className="product__label product__label--circle product__label--new">New</span>
-        <span className="product__label product__label--circle product__label--sale">Sale</span>
-        <span className="product__label product__label--circle product__label--top">Top</span>
-        <span className="product__label product__label--circle product__label--out">Out</span>
+        {product.isNew ? (
+          <span className="product__label product__label--circle product__label--new">New</span>
+        ) : (
+          ''
+        )}
 
-        <a href="/">
+        {product.salePrice ? (
+          <span className="product__label product__label--circle product__label--sale">Sale</span>
+        ) : (
+          ''
+        )}
+
+        {product.isTop ? (
+          <span className="product__label product__label--circle product__label--top">Top</span>
+        ) : (
+          ''
+        )}
+
+        {product.countInStock === 0 ? (
+          <span className="product__label product__label--circle product__label--out">Out</span>
+        ) : (
+          ''
+        )}
+
+        <a href={`/product/${product.slug}`}>
           <LazyLoadImage
-            alt="product"
-            src="images/products/product_2_1.jpg"
+            alt={product.name}
+            src={product.images[0].url}
             threshold={500}
             effect="black and white"
             wrapperClassName="product__image"
@@ -42,17 +61,32 @@ function Product(props) {
 
       <div className="product__body">
         <div className="product__category">
-          <a href="/">Furniture</a>, <a href="/">Interior</a>
+          {product.categories.map((category, index) => (
+            <React.Fragment key={index}>
+              <a href={`/category/${category.slug}`}>{category.name}</a>
+              {index < product.categories.length - 1 ? ', ' : ''}
+            </React.Fragment>
+          ))}
         </div>
         <h3 className="product__title">
-          <a href="/">Roots Sofa Bed</a>
+          <a href={`/product/${product.slug}`}>{product.name}</a>
         </h3>
-        <div className="product__price">
-          <span className="product__price-new">$500</span>
-          <span className="product__price-old">$600</span>
-        </div>
+
+        {product.countInStock === 0 ? (
+          <div className="product__price">
+            <span className="product__price-out">${product.price.toFixed(2)}</span>
+          </div>
+        ) : product.salePrice >= 0 ? (
+          <div className="product__price">
+            <span className="product__price-new">${product.salePrice.toFixed(2)}</span>
+            <span className="product__price-old">${product.price.toFixed(2)}</span>
+          </div>
+        ) : (
+          <div className="product__price">${product.price.toFixed(2)}</div>
+        )}
+
         <div className="product__rating">
-          <Rating rating={4} numReviews={6} />
+          <Rating rating={product.rating} numReviews={product.numReviews} />
         </div>
       </div>
     </div>
