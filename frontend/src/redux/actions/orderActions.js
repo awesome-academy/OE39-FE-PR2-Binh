@@ -5,6 +5,15 @@ import {
   ORDER_CREATE_FAIL,
   ORDER_CREATE_REQUEST,
   ORDER_CREATE_SUCCESS,
+  ORDER_DETAILS_FAIL,
+  ORDER_DETAILS_REQUEST,
+  ORDER_DETAILS_SUCCESS,
+  ORDER_PAY_REQUEST,
+  ORDER_PAY_SUCCESS,
+  ORDER_PAY_FAIL,
+  ORDER_DELIVER_REQUEST,
+  ORDER_DELIVER_SUCCESS,
+  ORDER_DELIVER_FAIL,
 } from '../constants/orderConstants';
 
 export const createOrder = (order) => async (dispatch, getState) => {
@@ -26,5 +35,62 @@ export const createOrder = (order) => async (dispatch, getState) => {
       type: ORDER_CREATE_FAIL,
       payload: catchErrors(error),
     });
+  }
+};
+
+export const detailsOrder = (orderId) => async (dispatch, getState) => {
+  dispatch({ type: ORDER_DETAILS_REQUEST, payload: orderId });
+  try {
+    const {
+      userSignin: { userInfo },
+    } = getState();
+
+    const { data } = await Axios.get(orderApiPath(orderId), {
+      headers: {
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    });
+    dispatch({ type: ORDER_DETAILS_SUCCESS, payload: data });
+  } catch (error) {
+    dispatch({ type: ORDER_DETAILS_FAIL, payload: catchErrors(error) });
+  }
+};
+
+export const paymentOrder = (orderId, paymentResult) => async (dispatch, getState) => {
+  dispatch({ type: ORDER_PAY_REQUEST, payload: { orderId, paymentResult } });
+  try {
+    const {
+      userSignin: { userInfo },
+    } = getState();
+
+    const { data } = await Axios.put(orderApiPath(`pay/${orderId}`), paymentResult, {
+      headers: {
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    });
+    dispatch({ type: ORDER_PAY_SUCCESS, payload: data });
+  } catch (error) {
+    dispatch({ type: ORDER_PAY_FAIL, payload: catchErrors(error) });
+  }
+};
+
+export const deliverOrder = (orderId) => async (dispatch, getState) => {
+  dispatch({ type: ORDER_DELIVER_REQUEST, payload: orderId });
+  try {
+    const {
+      userSignin: { userInfo },
+    } = getState();
+    const { data } = await Axios.put(
+      orderApiPath(`deliver/${orderId}`),
+      {},
+      {
+        headers: {
+          Authorization: `Bearer ${userInfo.token}`,
+        },
+      }
+    );
+    dispatch({ type: ORDER_DELIVER_SUCCESS, payload: data });
+  } catch (error) {
+    dispatch({ type: ORDER_DELIVER_FAIL, payload: catchErrors(error) });
   }
 };

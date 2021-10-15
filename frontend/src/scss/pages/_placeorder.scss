@@ -83,7 +83,11 @@
 }
 
 .order__action {
-  button {
+  .btn {
     width: 100%;
+
+    & + .btn {
+      margin-top: 1rem !important;
+    }
   }
 }
