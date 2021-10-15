@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './App';
+import { BrowserRouter } from 'react-router-dom';
 import './scss/reset.scss';
 import './scss/line-awesome.scss';
 import 'bootstrap/scss/bootstrap.scss';
@@ -9,11 +9,14 @@ import './scss/styles.scss';
 import reportWebVitals from './reportWebVitals';
 import { Provider } from 'react-redux';
 import store from './redux/store';
+import AppRouter from './routers/AppRouter';
 
 ReactDOM.render(
   <Provider store={store}>
     <React.StrictMode>
-      <App />
+      <BrowserRouter basename={'/'}>
+        <AppRouter />
+      </BrowserRouter>
     </React.StrictMode>
   </Provider>,
   document.getElementById('root')
