@@ -64,6 +64,15 @@ button {
   padding: 1.2rem 2rem;
 }
 
+.btn-link {
+  text-decoration: none;
+
+  &:hover {
+    color: $primary-color;
+    text-decoration: underline;
+  }
+}
+
 .btn-primary {
   @include button-variant(
     $white-color,

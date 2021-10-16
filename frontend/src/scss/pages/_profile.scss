@@ -1,0 +1,22 @@
+.profile {
+  .nav-item {
+    .nav-link {
+      color: $dark-text;
+
+      &:hover {
+        color: $primary-color;
+      }
+    }
+
+    &.active {
+      .nav-link {
+        color: $primary-color;
+      }
+    }
+  }
+
+  .btn {
+    padding: 0;
+    min-width: unset;
+  }
+}

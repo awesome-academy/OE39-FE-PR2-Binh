@@ -4,10 +4,14 @@ import {
   detailsOrder,
   paymentOrder,
   deliverOrder,
+  listOrderMine,
 } from '../controllers/orderController.js';
 import { isAuth, isAdmin } from '../utils/authMiddleware.js';
 
 const orderRouter = express.Router();
+
+// Get my order
+orderRouter.get('/mine', isAuth, listOrderMine);
 
 // Create new order
 orderRouter.post('/', isAuth, createOrder);
