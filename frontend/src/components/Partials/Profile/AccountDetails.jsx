@@ -1,6 +1,10 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { detailsUser } from '../../../redux/actions/userActions';
+import { toast } from 'react-toastify';
+import { uploadImage } from '../../../redux/actions/uploadActions';
+import { detailsUser, updateUserProfile } from '../../../redux/actions/userActions';
+import { USER_UPDATE_PROFILE_RESET } from '../../../redux/constants/userConstants';
+import handleError from '../../../utils/handleError';
 import LoadingBox from '../../Features/LoadingBox';
 import MessageBox from '../../Features/MessageBox';
 import AccountDetailsSkeleton from '../../Features/Skeleton/AccountDetailsSkeleton';
@@ -28,19 +32,24 @@ function AccountDetails(props) {
   const inputRef = useRef();
   const [userDetail, setUserDetail] = useState(initUserDetailsData);
   const [profilePicUrl, setProfilePicUrl] = useState('');
-  const [avatar, setAvatar] = useState(null);
-  const [avatarPreview, setAvatarPreview] = useState(null);
   const [highlighted, setHighlighted] = useState(false);
 
   const dispatch = useDispatch();
   const userSignin = useSelector((state) => state.userSignin);
   const { userInfo } = userSignin;
 
+  const userUpdateProfile = useSelector((state) => state.userUpdateProfile);
+  const { success: successUpdate, error: errorUpdate, loading: loadingUpdate } = userUpdateProfile;
+
+  const imageUpload = useSelector((state) => state.imageUpload);
+  const { loading: loadingUpload, error: errorUpload, image } = imageUpload;
+
   const userDetails = useSelector((state) => state.userDetails);
   const { loading, error, user } = userDetails;
 
   useEffect(() => {
-    if (!user) {
+    if (!user || successUpdate) {
+      dispatch({ type: USER_UPDATE_PROFILE_RESET });
       dispatch(detailsUser(userInfo._id));
     } else {
       setUserDetail({
@@ -56,11 +65,79 @@ function AccountDetails(props) {
       });
       setProfilePicUrl(user.avatar);
     }
-  }, [dispatch, user, userInfo]);
+  }, [dispatch, user, userInfo, successUpdate]);
 
-  const changeValueHandler = (e) => {};
+  const changeValueHandler = (e) => {
+    const { name, value } = e.target;
+    const error = handleError(name, value);
 
-  let picUrl = avatarPreview || profilePicUrl;
+    setUserDetail({
+      ...userDetail,
+      [name]: {
+        value,
+        error,
+      },
+    });
+  };
+
+  const uploadImageHandler = (e) => {
+    const files = e.target.files;
+    if (files.length === 0) {
+      return;
+    }
+    dispatch(uploadImage(files[0]));
+  };
+
+  const onDragOverHandler = (e) => {
+    e.preventDefault();
+    setHighlighted(true);
+  };
+
+  const onDragLeaveHandler = (e) => {
+    e.preventDefault();
+    setHighlighted(false);
+  };
+
+  const onDropHandler = (e) => {
+    e.preventDefault();
+    setHighlighted(true);
+
+    const droppedFile = Array.from(e.dataTransfer.files);
+    if (droppedFile.length === 0) {
+      return;
+    }
+    dispatch(uploadImage(droppedFile[0]));
+  };
+
+  const isValidate = useMemo(() => {
+    for (let key in userDetail) {
+      const error = userDetail[key].error;
+      if (error !== '') return false;
+    }
+
+    return true;
+  }, [userDetail]);
+
+  const submitHandler = async (e) => {
+    e.preventDefault();
+
+    if (!isValidate) {
+      toast.info('Invalid input information');
+      return;
+    }
+
+    const user = {
+      name: userDetail.name.value,
+      email: userDetail.email.value,
+      avatar: image,
+      currentPassword: userDetail.currentPassword.value,
+      newPassword: userDetail.newPassword.value,
+    };
+
+    dispatch(updateUserProfile(user));
+  };
+
+  let picUrl = image || profilePicUrl;
 
   return (
     <div className="account-detail">
@@ -72,16 +149,24 @@ function AccountDetails(props) {
         <MessageBox variant="danger">{error}</MessageBox>
       ) : (
         <>
-          <div className="avatar">
+          <div
+            className="avatar"
+            onDragOver={onDragOverHandler}
+            onDragLeave={onDragLeaveHandler}
+            onDrop={onDropHandler}
+            onClick={() => inputRef.current.click()}
+          >
             <img
               className={`avatar__image ${highlighted ? 'highlight' : ''}`}
               src={picUrl}
               alt="Avatar"
             />
+            {loadingUpload && <p className="mt-1">Uploading image...</p>}
             <span className="avatar__caption">Choose avatar</span>
           </div>
-          <form className="form-account-detail mt-2">
-            {error && <p className="progress-bar bg-danger p-1 mb-2">{error}</p>}
+          <form className="form-account-detail mt-2" onSubmit={submitHandler}>
+            {errorUpdate && <MessageBox variant="danger">{errorUpdate}</MessageBox>}
+            {errorUpload && <MessageBox variant="danger">{errorUpload}</MessageBox>}
             <input
               ref={inputRef}
               type="file"
@@ -89,6 +174,7 @@ function AccountDetails(props) {
               className="form-control"
               id="avatar"
               name="avatar"
+              onChange={uploadImageHandler}
               style={{ display: 'none' }}
             />
             <div className="form-group">
@@ -126,12 +212,12 @@ function AccountDetails(props) {
               )}
             </div>
             <div className="form-group">
-              <label htmlFor="password">Current Password *</label>
+              <label htmlFor="currentPassword">Current Password *</label>
               <input
                 type="password"
                 className="form-control"
-                id="password"
-                name="password"
+                id="currentPassword"
+                name="currentPassword"
                 value={userDetail.currentPassword.value}
                 onChange={changeValueHandler}
                 placeholder="Enter Current Password"
@@ -156,7 +242,7 @@ function AccountDetails(props) {
             <div className="d-flex justify-content-between align-items-center">
               <button type="submit" className="btn btn-primary">
                 Update
-                {loading && <LoadingBox />}
+                {loadingUpdate && <LoadingBox />}
               </button>
             </div>
           </form>

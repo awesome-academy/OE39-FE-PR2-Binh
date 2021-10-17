@@ -8,6 +8,10 @@ const validateEmail = (email) => {
 const handleError = (name, value, password) => {
   let error = '';
 
+  if (name === 'newPassword') {
+    return '';
+  }
+
   if (value.trim().length === 0) {
     return 'Please fill in this field';
   }
