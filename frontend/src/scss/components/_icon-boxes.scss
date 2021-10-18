@@ -1,0 +1,27 @@
+/* Icon boxes */
+.icon-box {
+  color: $paragraph-text;
+  font-weight: 300;
+  font-size: 1.6rem;
+  line-height: 1.5;
+  letter-spacing: -0.01em;
+  padding: 2rem 0;
+  margin-bottom: 4rem;
+
+  &__title {
+    color: $dark-text;
+    font-weight: 500;
+    font-size: 1.8rem;
+    margin-bottom: 0.9rem;
+  }
+
+  &__icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: $primary-color;
+    font-size: 4rem;
+    line-height: 1;
+    margin-bottom: 1.3rem;
+  }
+}

@@ -1,0 +1,107 @@
+.intro {
+  .btn {
+    padding-top: 1.5rem;
+    padding-bottom: 1.5rem;
+    font-size: 1.4rem;
+  }
+}
+
+.intro__slide-image {
+  position: relative;
+  height: 430px;
+  overflow: hidden;
+
+  img {
+    position: absolute;
+    right: -6rem;
+    top: 6rem;
+    z-index: 2;
+  }
+}
+
+.intro__slide {
+  position: relative;
+}
+
+#intro__slide-first {
+  background-color: $bg-intro-primary;
+}
+
+#intro__slide-second {
+  background-color: $bg-intro-secondary;
+}
+
+.intro__content {
+  position: absolute;
+  top: 50%;
+  left: 6rem;
+  z-index: 10;
+  transform: translateY(-50%);
+}
+
+.intro__subtitle {
+  color: $white-color;
+  font-weight: 300;
+  font-size: 2rem;
+  letter-spacing: -0.01em;
+  margin-bottom: 0.5rem;
+}
+
+.intro__title {
+  color: $white-color;
+  font-weight: 600;
+  font-size: 5.2rem;
+  line-height: 1.2;
+  letter-spacing: -0.03em;
+  margin-bottom: 1.2rem;
+  text-indent: -0.2rem;
+}
+
+.intro__banner {
+  position: relative;
+  margin-bottom: 2rem;
+
+  &-content {
+    position: absolute;
+    top: 50%;
+    left: 4rem;
+    z-index: 10;
+    transform: translateY(-50%);
+  }
+
+  &-subtitle {
+    color: $paragraph-text;
+    font-weight: 300;
+    font-size: 1.6rem;
+    line-height: 1.2;
+    letter-spacing: 0;
+    margin-bottom: 1rem;
+  }
+
+  &-title {
+    color: $dark-text;
+    font-weight: 500;
+    font-size: 2rem;
+    line-height: 1.3;
+    margin-bottom: 1.5rem;
+    letter-spacing: -0.03em;
+
+    a {
+      color: inherit;
+
+      &:hover,
+      &:focus {
+        color: $primary-color;
+      }
+    }
+  }
+
+  &-link {
+    font-weight: 400;
+    display: inline-block;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}

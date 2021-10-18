@@ -1,0 +1,14 @@
+.product__carousel {
+  .slick-list {
+    padding-bottom: 2rem;
+  }
+
+  .slick-dots li {
+    width: 12px;
+    margin: 0 3px;
+  }
+}
+
+.slick-dots li button:before {
+  font-size: 10px;
+}

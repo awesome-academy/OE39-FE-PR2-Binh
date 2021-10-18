@@ -37,6 +37,10 @@
   }
 }
 
+.load-more-rotating {
+  animation: 1s ease 0s normal both infinite rotating;
+}
+
 @keyframes bouncedelay {
   0%,
   80%,
@@ -46,5 +50,15 @@
 
   40% {
     transform: scale(1);
+  }
+}
+
+@keyframes rotating {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
   }
 }
