@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import { BrowserRouter } from 'react-router-dom';
 import './scss/reset.scss';
+import 'antd/dist/antd.css';
 import './scss/line-awesome.scss';
 import 'bootstrap/scss/bootstrap.scss';
 import 'slick-carousel/slick/slick.css';
