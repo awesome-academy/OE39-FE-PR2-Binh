@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useHistory } from 'react-router';
+import { useHistory } from 'react-router-dom';
 import { listOrderMine } from '../../../redux/actions/orderActions';
 import MessageBox from '../../Features/MessageBox';
 import OrderHistorySkeleton from '../../Features/Skeleton/OrderHistorySkeleton';
