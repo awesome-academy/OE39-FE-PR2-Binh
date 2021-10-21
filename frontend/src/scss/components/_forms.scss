@@ -1,0 +1,40 @@
+.form-control {
+  height: 41px;
+  padding: 0.85rem 2rem;
+  font-size: 1.4rem;
+  line-height: 1.5;
+  font-weight: 300;
+  color: $paragraph-text;
+  background-color: $white-color;
+  border: 1px solid $border-color;
+  border-radius: 0;
+  margin-bottom: 2rem;
+  transition: all 0.3s;
+  outline-width: 0;
+}
+
+.input-spinner {
+  position: relative;
+
+  .input-group-prepend,
+  .input-group-append {
+    position: absolute;
+    top: 0;
+  }
+
+  .input-group-prepend {
+    left: 0;
+  }
+
+  .input-group-append {
+    right: 0;
+  }
+
+  .form-control {
+    padding: 0.85rem 2.6rem;
+    height: auto;
+    border-color: $border-color;
+    background-color: $white-color;
+    margin: 0;
+  }
+}

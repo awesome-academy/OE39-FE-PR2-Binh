@@ -1,0 +1,35 @@
+/* Breadcrumb */
+.breadcrumb__nav {
+  .container {
+    padding-top: 1.4rem;
+    padding-bottom: 1.4rem;
+  }
+}
+
+.breadcrumb {
+  background-color: transparent;
+  border-radius: 0;
+  margin: 0;
+  padding: 0;
+}
+
+.breadcrumb-item {
+  font-weight: 300;
+  font-size: 1.4rem;
+  line-height: 1.5;
+  letter-spacing: 0;
+  text-transform: capitalize;
+
+  a {
+    color: $paragraph-text;
+
+    &:hover,
+    &:focus {
+      color: $primary-color;
+    }
+  }
+
+  &.active {
+    color: $dark-text;
+  }
+}
