@@ -1,4 +1,5 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import {
   EmailShareButton,
@@ -9,6 +10,7 @@ import {
   WhatsappShareButton,
 } from 'react-share';
 import { productDetailPath } from '../../../utils/router';
+import { addToCart } from '../../../redux/actions/cartActions';
 import Qty from '../../Features/Qty';
 import Rating from '../../Features/Rating';
 import ProductSticky from './ProductSticky';
@@ -16,6 +18,9 @@ import ProductSticky from './ProductSticky';
 function ProductDetail(props) {
   const { product } = props;
   const ref = useRef(null);
+  const [qty, setQty] = useState(1);
+
+  const dispatch = useDispatch();
 
   useEffect(() => {
     window.addEventListener('scroll', scrollHandler);
@@ -24,6 +29,12 @@ function ProductDetail(props) {
       window.removeEventListener('scroll', scrollHandler);
     };
   }, []);
+
+  const addToCartHandler = (e) => {
+    e.preventDefault();
+    if (product.countInStock !== 0 && product.countInStock >= qty)
+      dispatch(addToCart(product.slug, qty));
+  };
 
   function scrollHandler() {
     let sticky = ref.current.querySelector('.product__stick');
@@ -62,10 +73,14 @@ function ProductDetail(props) {
       </div>
       <div className="product__quantity-wrapper">
         <span>Qty:</span>
-        <Qty />
+        <Qty changeQty={setQty} max={product.countInStock} value={qty} />
       </div>
       <div className="product__detail-action">
-        <a href="/" className="btn-product btn-cart">
+        <a
+          href="/"
+          className={`btn-product btn-cart ${product.countInStock === 0 ? 'btn-disabled' : ''}`}
+          onClick={addToCartHandler}
+        >
           <span>add to cart</span>
         </a>
 
@@ -124,7 +139,7 @@ function ProductDetail(props) {
           url={productDetailPath(product.slug)}
         >
           <a href="/" className="social-icon" title="Tumblr">
-            <i class="lab la-tumblr"></i>
+            <i className="lab la-tumblr"></i>
           </a>
         </TumblrShareButton>
 
@@ -134,7 +149,7 @@ function ProductDetail(props) {
           url={productDetailPath(product.slug)}
         >
           <a href="/" className="social-icon" title="Whatsapp">
-            <i class="lab la-whatsapp"></i>
+            <i className="lab la-whatsapp"></i>
           </a>
         </WhatsappShareButton>
 
@@ -144,7 +159,7 @@ function ProductDetail(props) {
           url={productDetailPath(product.slug)}
         >
           <a href="/" className="social-icon" title="Email">
-            <i class="las la-envelope"></i>
+            <i className="las la-envelope"></i>
           </a>
         </EmailShareButton>
       </div>

@@ -39,9 +39,15 @@ function ProductScreen(props) {
     dispatch(detailsProduct(slug));
   }, [dispatch, slug]);
 
+  const breadcrumb = [
+    { title: 'Home', href: '/' },
+    { title: product?.categories[0]?.name, href: `/${product?.categories[0]?.slug}` },
+    { title: product?.name, href: `/product/${product?.slug}` },
+  ];
+
   return (
     <div className="main" ref={ref}>
-      <Breadcrumb />
+      <Breadcrumb breadcrumb={breadcrumb} />
       <div className="container">
         {loading ? (
           <ProductDetailSkeleton />
