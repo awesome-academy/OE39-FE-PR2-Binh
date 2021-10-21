@@ -1,5 +1,8 @@
-import User from '../models/userModel.js';
+import bcrypt from 'bcryptjs';
+import isEmail from 'validator/lib/isEmail.js';
 import data from '../data.js';
+import User from '../models/userModel.js';
+import { generateToken } from '../utils/authMiddleware.js';
 
 export const createSampleUsers = async (req, res) => {
   try {
