@@ -53,6 +53,7 @@ function ProductGallery(props) {
           <SlickCarousel options={{ dots: false }} onSlickRef={setSlickRef}>
             {product.images.map((image, index) => (
               <SideBySideMagnifier
+                key={index}
                 alwaysInPlace={true}
                 imageAlt="Product"
                 imageSrc={renderBaseUrl(image.url)}

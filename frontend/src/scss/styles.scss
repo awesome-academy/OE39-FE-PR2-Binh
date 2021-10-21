@@ -22,9 +22,12 @@
 @import './components/lazy-load';
 @import './components/breadcrumb';
 @import './components/forms';
+@import './components/page-header.scss';
+@import './components/tables.scss';
 
 @import 'layout/header';
 @import 'layout/footer';
 
 @import 'pages/home';
 @import 'pages/product';
+@import 'pages/cart';

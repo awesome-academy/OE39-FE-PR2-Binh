@@ -46,6 +46,11 @@
   outline: none;
 }
 
+.btn-disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
 .btn.btn-load-more {
   text-transform: uppercase;
   min-width: 190px;

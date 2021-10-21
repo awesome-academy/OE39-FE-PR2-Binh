@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import Footer from './components/Partials/Footer/Footer';
 import Header from './components/Partials/Header/Header';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function App(props) {
   const [visible, setVisible] = useState(false);
@@ -33,6 +35,18 @@ function App(props) {
       <Header />
       {props.children}
       <Footer />
+
+      <ToastContainer
+        position="top-right"
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
 
       <button
         id="scroll-top"
