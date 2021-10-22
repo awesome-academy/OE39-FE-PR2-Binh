@@ -5,6 +5,7 @@ import Rating from './Rating';
 import { renderBaseUrl } from '../../utils/router';
 import { useDispatch } from 'react-redux';
 import { addToCart } from '../../redux/actions/cartActions';
+import { showQuickViewModal } from '../../redux/actions/modalActions';
 
 function Product({ product }) {
   const dispatch = useDispatch();
@@ -13,6 +14,12 @@ function Product({ product }) {
     e.preventDefault();
 
     dispatch(addToCart(product.slug, 1));
+  }
+
+  function quickViewHandler(e) {
+    e.preventDefault();
+
+    dispatch(showQuickViewModal(product.slug));
   }
 
   return (
@@ -69,7 +76,11 @@ function Product({ product }) {
             <span>go to wishlist</span>
           </a>
 
-          <a href="/" className="btn-product-icon btn-quickview btn-expandable">
+          <a
+            href="/"
+            className="btn-product-icon btn-quickview btn-expandable"
+            onClick={quickViewHandler}
+          >
             <span>quick view</span>
           </a>
         </div>

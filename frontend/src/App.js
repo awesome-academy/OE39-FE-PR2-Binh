@@ -3,6 +3,8 @@ import Footer from './components/Partials/Footer/Footer';
 import Header from './components/Partials/Header/Header';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import SignInModal from './components/Features/Modals/SignInModal';
+import QuickViewModal from './components/Features/Modals/QuickViewModal';
 
 function App(props) {
   const [visible, setVisible] = useState(false);
@@ -47,6 +49,9 @@ function App(props) {
         draggable
         pauseOnHover
       />
+
+      <SignInModal />
+      <QuickViewModal />
 
       <button
         id="scroll-top"

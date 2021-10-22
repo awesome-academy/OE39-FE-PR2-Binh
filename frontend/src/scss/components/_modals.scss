@@ -1,0 +1,55 @@
+.modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  z-index: 1055;
+  display: inline-block;
+  overflow-x: hidden;
+  overflow-y: auto;
+  outline: 0;
+  transform: translate(-50%, -50%);
+  transition: all 0.8s ease-in-out;
+}
+
+.modal__content {
+  position: relative;
+}
+
+.modal__close {
+  position: absolute;
+  top: 1.2rem;
+  right: 1.8rem;
+  width: 2.2rem;
+  height: 2.2rem;
+  color: $white-color;
+  background-color: $light-text;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  transition: all 0.2s linear;
+
+  &:hover {
+    color: $white-color;
+    background-color: $primary-color;
+  }
+}
+
+#modal__signin {
+  max-width: 580px;
+  height: auto;
+}
+
+#modal__quickview {
+  max-width: 102rem;
+  height: auto;
+  background-color: #fff;
+
+  .modal__content {
+    padding: 1rem;
+  }
+
+  .product__details-wrapper {
+    margin-bottom: 0;
+  }
+}
