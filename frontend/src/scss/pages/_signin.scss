@@ -1,0 +1,43 @@
+.signin {
+  .nav.nav-pills {
+    .nav-link {
+      text-transform: capitalize;
+      font-weight: 400;
+      font-size: 2rem;
+      letter-spacing: -0.025em;
+      border-bottom-width: 0.2rem;
+      padding: 0.9rem 1rem;
+    }
+  }
+
+  a {
+    color: inherit;
+
+    &:hover,
+    &:focus {
+      color: $primary-color;
+    }
+  }
+}
+
+.form-tab {
+  .nav {
+    &.nav-pills {
+      color: $dark-text;
+      border-bottom: 0.1rem solid $border-color;
+    }
+
+    .nav-item {
+      flex: 1 1;
+    }
+  }
+}
+
+.form-box {
+  max-width: 575px;
+  margin-left: auto;
+  margin-right: auto;
+  background-color: $white-color;
+  padding: 3.7rem 6rem 6.4rem;
+  box-shadow: 0 3px 16px rgba($box-shadow-color, 0.1);
+}
