@@ -664,3 +664,21 @@
     }
   }
 }
+
+.user-signin {
+  .header__menu {
+    left: 0;
+    flex-direction: column;
+
+    a {
+      display: flex;
+      align-items: center;
+      white-space: nowrap;
+      padding: 0.3rem 1.5rem;
+    }
+  }
+
+  li + li {
+    margin-left: 0;
+  }
+}

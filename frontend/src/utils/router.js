@@ -15,3 +15,7 @@ export const productDetailPath = (slug = '') => {
 export const productApiPath = (slug = '') => {
   return `${apiEndPoint}/products/${slug}`;
 };
+
+export const userApiPath = (slug = '') => {
+  return `${apiEndPoint}/users/${slug}`;
+};
