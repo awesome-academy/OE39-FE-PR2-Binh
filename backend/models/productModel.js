@@ -27,6 +27,8 @@ const productSchema = new mongoose.Schema(
     images: {
       type: Array,
     },
+    isNew: { type: Boolean },
+    isTop: { type: Boolean },
     brand: { type: String, required: true },
     price: { type: Number, required: true },
     salePrice: { type: Number, required: false },

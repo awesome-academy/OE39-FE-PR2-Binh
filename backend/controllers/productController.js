@@ -1,6 +1,7 @@
 import Product from '../models/productModel.js';
 import Category from '../models/categoryModel.js';
 import data from '../data.js';
+import slugify from '../utils/slugify.js';
 
 export const createSampleProducts = async (req, res) => {
   try {
@@ -77,5 +78,78 @@ export const listProductsRelated = async (req, res) => {
     }
   } catch (error) {
     res.status(500).send({ message: 'No products found' });
+  }
+};
+
+export const createProduct = async (req, res) => {
+  try {
+    const { name, description, brand, price, salePrice } = req.body;
+
+    if (name) {
+      req.body.slug = slugify(name);
+    } else {
+      return res.status(401).send({ message: 'Name is require' });
+    }
+
+    if (!description || !brand || !price) {
+      return res.status(401).send({ message: 'Some information is missing' });
+    }
+
+    if (price && salePrice) {
+      if (salePrice >= price) {
+        return res.status(401).send({ message: 'Sale price greater than origin price' });
+      }
+    }
+
+    const newProduct = await new Product(req.body).save();
+    return res.json(newProduct);
+  } catch (error) {
+    return res.status(500).send({ message: 'An error occurred. Please try again later' });
+  }
+};
+
+export const updateProduct = async (req, res) => {
+  try {
+    const { name, description, brand, price, salePrice, images, countInStock } = req.body;
+
+    if (name) {
+      req.body.slug = slugify(name);
+    } else {
+      return res.status(401).send({ message: 'Name is require' });
+    }
+
+    if (!description || !brand || !price || !images || !countInStock) {
+      return res.status(401).send({ message: 'Some information is missing' });
+    }
+
+    if (price && salePrice) {
+      if (salePrice >= price) {
+        return res.status(401).send({ message: 'Sale price greater than origin price' });
+      }
+    }
+
+    const updated = await Product.findOneAndUpdate({ slug: req.params.slug }, req.body, {
+      new: true,
+    }).exec();
+
+    return res.json(updated);
+  } catch (error) {
+    return res.status(500).send({ message: 'An error occurred. Please try again later' });
+  }
+};
+
+export const deleteProduct = async (req, res) => {
+  try {
+    const { slug } = req.params;
+    const product = await Product.findOne({ slug });
+
+    if (!product) {
+      return res.status(404).send({ message: 'Product Not Found' });
+    }
+
+    const deleteProduct = await product.remove();
+    return res.send(deleteProduct);
+  } catch (error) {
+    return res.status(500).send({ message: 'An error occurred. Please try again later' });
   }
 };
