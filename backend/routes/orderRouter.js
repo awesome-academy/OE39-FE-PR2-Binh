@@ -5,6 +5,8 @@ import {
   paymentOrder,
   deliverOrder,
   listOrderMine,
+  getListOrders,
+  deleteOrder,
 } from '../controllers/orderController.js';
 import { isAuth, isAdmin } from '../utils/authMiddleware.js';
 
@@ -24,5 +26,11 @@ orderRouter.put('/pay/:id', isAuth, paymentOrder);
 
 // update order delivered
 orderRouter.put('/deliver/:id', isAuth, isAdmin, deliverOrder);
+
+// Get list order
+orderRouter.get('/', isAuth, isAdmin, getListOrders);
+
+// Delete order
+orderRouter.delete('/:id', isAuth, isAdmin, deleteOrder);
 
 export default orderRouter;

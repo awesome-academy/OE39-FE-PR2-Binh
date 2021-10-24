@@ -115,3 +115,40 @@ export const listOrderMine = async (req, res) => {
     return res.status(500).send({ message: 'An error occurred. Please try again later' });
   }
 };
+
+export const getListOrders = async (req, res) => {
+  try {
+    const pageSize = Number(req.query.pageSize) || 10;
+    const page = Number(req.query.pageNumber) || 1;
+
+    const count = await Order.count({});
+
+    const orders = await Order.find({})
+      .populate('user', 'name')
+      .skip(pageSize * (page - 1))
+      .limit(pageSize);
+
+    res.send({
+      orders,
+      pageSize,
+      currentPage: page,
+      totalPages: Math.ceil(count / pageSize),
+      totalRows: count,
+    });
+  } catch (error) {
+    return res.status(500).send({ message: 'An error occurred. Please try again later' });
+  }
+};
+
+export const deleteOrder = async (req, res) => {
+  try {
+    const order = await Order.findById(req.params.id);
+    if (!order) {
+      return res.status(404).send({ message: 'Order Not Found' });
+    }
+    const deleteOrder = await order.remove();
+    return res.send({ message: 'Order Deleted', order: deleteOrder });
+  } catch (error) {
+    return res.status(500).send({ message: 'An error occurred. Please try again later' });
+  }
+};
