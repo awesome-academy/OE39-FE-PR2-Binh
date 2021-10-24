@@ -59,3 +59,13 @@
     margin-bottom: 0;
   }
 }
+
+#modal__user {
+  max-width: 60rem;
+  height: auto;
+  background-color: #fff;
+
+  .modal__content {
+    padding: 1rem;
+  }
+}

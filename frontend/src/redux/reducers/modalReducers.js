@@ -2,9 +2,11 @@ import {
   CLOSE_ORDER,
   CLOSE_QUICKVIEW,
   CLOSE_SIGNIN,
+  CLOSE_USER,
   SHOW_ORDER,
   SHOW_QUICKVIEW,
   SHOW_SIGNIN,
+  SHOW_USER,
 } from '../constants/modalConstants';
 
 export const modalReducer = (
@@ -53,7 +55,19 @@ export const modalReducer = (
         showModal: false,
         type: '',
       };
-
+    case SHOW_USER:
+      return {
+        ...state,
+        showModal: true,
+        type: 'user',
+        user: action.payload,
+      };
+    case CLOSE_USER:
+      return {
+        ...state,
+        showModal: false,
+        type: '',
+      };
     default:
       return state;
   }

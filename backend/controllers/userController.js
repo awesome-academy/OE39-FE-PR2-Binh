@@ -171,3 +171,20 @@ export const deleteUser = async (req, res) => {
     return res.status(500).send({ message: 'An error occurred. Please try again later' });
   }
 };
+
+export const updateUser = async (req, res) => {
+  try {
+    const { name, email, isAdmin } = req.body;
+    const user = await User.findById(req.params.id);
+    if (!user) {
+      return res.status(404).send({ message: 'User Not Found' });
+    }
+    user.name = name || user.name;
+    user.email = email || user.email;
+    user.isAdmin = isAdmin;
+    const updated = await user.save();
+    res.send({ message: 'User Updated', user: updated });
+  } catch (error) {
+    return res.status(500).send({ message: 'An error occurred. Please try again later' });
+  }
+};

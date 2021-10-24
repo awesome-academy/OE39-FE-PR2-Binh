@@ -3,8 +3,9 @@ import { Button, Popconfirm, Space, Table, Tag } from 'antd';
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import MessageBox from '../components/Features/MessageBox';
+import { showUserModal } from '../redux/actions/modalActions';
 import { deleteUser, listUsers } from '../redux/actions/userActions';
-import { USER_DELETE_RESET } from '../redux/constants/userConstants';
+import { USER_DELETE_RESET, USER_UPDATE_RESET } from '../redux/constants/userConstants';
 import { addKeyToObject } from '../utils';
 
 function UserListScreen(props) {
@@ -15,12 +16,18 @@ function UserListScreen(props) {
   const userDelete = useSelector((state) => state.userDelete);
   const { loading: loadingDelete, error: errorDelete, success: successDelete } = userDelete;
 
+  const userUpdate = useSelector((state) => state.userUpdate);
+  const { success: successUpdate } = userUpdate;
+
   useEffect(() => {
     if (successDelete) {
       dispatch({ type: USER_DELETE_RESET });
     }
+    if (successUpdate) {
+      dispatch({ type: USER_UPDATE_RESET });
+    }
     dispatch(listUsers({}));
-  }, [dispatch, successDelete]);
+  }, [dispatch, successDelete, successUpdate]);
 
   const rowSelection = {
     onChange: (selectedRowKeys, selectedRows) => {
@@ -37,7 +44,7 @@ function UserListScreen(props) {
   };
 
   const handleEdit = (userId) => {
-    
+    dispatch(showUserModal(userId));
   };
 
   const columns = [
