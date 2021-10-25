@@ -5,7 +5,7 @@ const validateEmail = (email) => {
   return re.test(String(email).toLowerCase());
 };
 
-const handleError = (name, value) => {
+const handleError = (name, value, password) => {
   let error = '';
 
   if (value.trim().length === 0) {
@@ -21,7 +21,10 @@ const handleError = (name, value) => {
       if (value.length < 6) error = 'Password is too short';
       else error = '';
       break;
-
+    case 'confirmPassword':
+      if (value !== password) error = 'Repassword does not match';
+      else error = '';
+      break;
     default:
       break;
   }
