@@ -1,0 +1,35 @@
+.search {
+  margin-top: 2rem;
+  margin-bottom: 4rem;
+
+  &__item {
+    color: $dark-text;
+    margin: 0 0 2rem;
+    padding-bottom: 2rem;
+    border-bottom: 0.1rem solid $border-color;
+
+    &:last-child {
+      border-bottom: none;
+    }
+  }
+
+  &__title {
+    color: $dark-text;
+    font-weight: 400;
+    font-size: 1.8rem;
+    line-height: 1.15;
+    letter-spacing: -0.01em;
+    margin-bottom: 0.7 rem;
+  }
+
+  .ratings__wrapper {
+    justify-content: start;
+  }
+
+  &__rating {
+    .active {
+      font-size: 1.6rem;
+      font-weight: 500;
+    }
+  }
+}

@@ -8,6 +8,7 @@ import {
   categoryListReducer,
   categoryUpdateReducer,
 } from './reducers/categoryReducers';
+import { filtersReducer } from './reducers/filterReducers';
 import { modalReducer } from './reducers/modalReducers';
 import {
   orderCreateReducer,
@@ -19,6 +20,7 @@ import {
   orderPayReducer,
 } from './reducers/orderReducers';
 import {
+  productBrandListReducer,
   productCreateReducer,
   productDeleteReducer,
   productDetailsReducer,
@@ -63,6 +65,7 @@ const initialState = {
 
 const reducer = combineReducers({
   modal: modalReducer,
+  filters: filtersReducer,
   imageUpload: imageUploadReducer,
   cart: cartReducer,
   productList: productListReducer,
@@ -72,6 +75,7 @@ const reducer = combineReducers({
   productCreate: productCreateReducer,
   productUpdate: productUpdateReducer,
   productDelete: productDeleteReducer,
+  productBrandList: productBrandListReducer,
   userSignin: userSigninReducer,
   userSignup: userSignUpReducer,
   userDetails: userDetailsReducer,

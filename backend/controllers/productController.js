@@ -160,3 +160,12 @@ export const deleteProduct = async (req, res) => {
     return res.status(500).send({ message: 'An error occurred. Please try again later' });
   }
 };
+
+export const getListBrandProduct = async (req, res) => {
+  try {
+    const brands = await Product.find({}).distinct('brand');
+    return res.send(brands);
+  } catch (error) {
+    return res.status(500).send({ message: 'An error occurred. Please try again later' });
+  }
+};

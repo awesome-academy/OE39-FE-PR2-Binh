@@ -6,12 +6,14 @@ import CartScreen from '../screens/CartScreen';
 import HomeScreen from '../screens/HomeScreen';
 import NotFoundScreen from '../screens/NotFoundScreen';
 import ProductScreen from '../screens/ProductScreen';
+import SearchScreen from '../screens/SearchScreen';
 import SigninScreen from '../screens/SigninScreen';
 
 function PublicRouter(props) {
   return (
     <Layout>
       <Switch>
+        <Route exact path="/search" component={SearchScreen} />
         <Route exact path="/signin" component={SigninScreen} />
         <Route exact path="/cart" component={CartScreen} />
         <Route exact path="/product/:slug" component={ProductScreen} />

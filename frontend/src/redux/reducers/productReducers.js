@@ -1,4 +1,7 @@
 import {
+  PRODUCT_BRAND_LIST_FAIL,
+  PRODUCT_BRAND_LIST_REQUEST,
+  PRODUCT_BRAND_LIST_SUCCESS,
   PRODUCT_CREATE_FAIL,
   PRODUCT_CREATE_REQUEST,
   PRODUCT_CREATE_RESET,
@@ -135,6 +138,19 @@ export const productDeleteReducer = (state = {}, action) => {
       return { loading: false, error: action.payload };
     case PRODUCT_DELETE_RESET:
       return {};
+    default:
+      return state;
+  }
+};
+
+export const productBrandListReducer = (state = { loading: true }, action) => {
+  switch (action.type) {
+    case PRODUCT_BRAND_LIST_REQUEST:
+      return { loading: true };
+    case PRODUCT_BRAND_LIST_SUCCESS:
+      return { loading: false, brands: action.payload };
+    case PRODUCT_BRAND_LIST_FAIL:
+      return { loading: false, error: action.payload };
     default:
       return state;
   }
