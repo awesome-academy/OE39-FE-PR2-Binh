@@ -8,6 +8,7 @@ import {
   updateProduct,
   deleteProduct,
   getListBrandProduct,
+  listProductSearch,
 } from '../controllers/productController.js';
 import { isAdmin, isAuth } from '../utils/authMiddleware.js';
 
@@ -18,6 +19,9 @@ productRouter.get('/seed', createSampleProducts);
 
 // Get list brand
 productRouter.get('/brands', getListBrandProduct);
+
+// Get list product search
+productRouter.get('/search', listProductSearch);
 
 // Get list product
 productRouter.get('/', listProducts);

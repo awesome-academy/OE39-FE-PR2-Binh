@@ -24,6 +24,9 @@ import {
   PRODUCT_RELATED_LOADMORE_SUCCESS,
   PRODUCT_RELATED_REQUEST,
   PRODUCT_RELATED_SUCCESS,
+  PRODUCT_SEARCH_FAIL,
+  PRODUCT_SEARCH_REQUEST,
+  PRODUCT_SEARCH_SUCCESS,
   PRODUCT_UPDATE_FAIL,
   PRODUCT_UPDATE_REQUEST,
   PRODUCT_UPDATE_SUCCESS,
@@ -137,5 +140,49 @@ export const listProductBrands = () => async (dispatch) => {
     dispatch({ type: PRODUCT_BRAND_LIST_SUCCESS, payload: data });
   } catch (error) {
     dispatch({ type: PRODUCT_BRAND_LIST_FAIL, payload: error.message });
+  }
+};
+
+export const listProductSearch = () => async (dispatch, getState) => {
+  dispatch({ type: PRODUCT_SEARCH_REQUEST });
+  try {
+    let url = productApiPath('search?');
+
+    const { filters } = getState();
+    const { page, filterCategory, filterBrand, filterRating, filterPrice, filterName, orderBy } =
+      filters;
+
+    if (page) {
+      url += `&pageNumber=${page}`;
+    }
+
+    if (filterName) {
+      url += `&name=${filterName}`;
+    }
+
+    if (orderBy) {
+      url += `&order=${orderBy}`;
+    }
+
+    if (filterCategory.length > 0) {
+      filterCategory.forEach((category) => (url += `&category=${category}`));
+    }
+
+    if (filterBrand.length > 0) {
+      filterBrand.forEach((brand) => (url += `&brand=${brand}`));
+    }
+
+    if (filterRating > 0) {
+      url += `&rating=${filterRating}`;
+    }
+
+    if (filterPrice[0] >= 0 && filterPrice[1] >= 0) {
+      url += `&min=${filterPrice[0]}&max=${filterPrice[1]}`;
+    }
+
+    const { data } = await Axios.get(url);
+    dispatch({ type: PRODUCT_SEARCH_SUCCESS, payload: data });
+  } catch (error) {
+    dispatch({ type: PRODUCT_SEARCH_FAIL, payload: catchErrors(error) });
   }
 };

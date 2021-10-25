@@ -23,6 +23,9 @@ import {
   PRODUCT_RELATED_LOADMORE_SUCCESS,
   PRODUCT_RELATED_REQUEST,
   PRODUCT_RELATED_SUCCESS,
+  PRODUCT_SEARCH_FAIL,
+  PRODUCT_SEARCH_REQUEST,
+  PRODUCT_SEARCH_SUCCESS,
   PRODUCT_UPDATE_FAIL,
   PRODUCT_UPDATE_REQUEST,
   PRODUCT_UPDATE_RESET,
@@ -150,6 +153,28 @@ export const productBrandListReducer = (state = { loading: true }, action) => {
     case PRODUCT_BRAND_LIST_SUCCESS:
       return { loading: false, brands: action.payload };
     case PRODUCT_BRAND_LIST_FAIL:
+      return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+
+export const productSearchReducer = (state = { loading: true, products: [] }, action) => {
+  switch (action.type) {
+    case PRODUCT_SEARCH_REQUEST:
+      return { loading: true };
+    case PRODUCT_SEARCH_SUCCESS:
+      return {
+        loading: false,
+        products: action.payload.products,
+        paginations: {
+          pageSize: action.payload.pageSize,
+          current: action.payload.page,
+          totalPages: action.payload.pages,
+          total: action.payload.totalRows,
+        },
+      };
+    case PRODUCT_SEARCH_FAIL:
       return { loading: false, error: action.payload };
     default:
       return state;

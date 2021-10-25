@@ -27,6 +27,7 @@ import {
   productListReducer,
   productListRelatedMoreReducer,
   productListRelatedReducer,
+  productSearchReducer,
   productUpdateReducer,
 } from './reducers/productReducers';
 import { imageUploadReducer } from './reducers/uploadReducers';
@@ -76,6 +77,7 @@ const reducer = combineReducers({
   productUpdate: productUpdateReducer,
   productDelete: productDeleteReducer,
   productBrandList: productBrandListReducer,
+  productSearch: productSearchReducer,
   userSignin: userSigninReducer,
   userSignup: userSignUpReducer,
   userDetails: userDetailsReducer,

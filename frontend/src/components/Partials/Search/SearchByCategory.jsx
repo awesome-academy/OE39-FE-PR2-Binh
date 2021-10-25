@@ -2,7 +2,7 @@ import { Spin, Tree } from 'antd';
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { listCategories } from '../../../redux/actions/categoryActions';
-import { FILTER_BY_CATEGORY } from '../../../redux/constants/filterContants';
+import { FILTER_BY_CATEGORY, FILTER_BY_PAGE } from '../../../redux/constants/filterContants';
 import { arrayToTree, changeArray } from '../../../utils';
 import MessageBox from '../../Features/MessageBox';
 
@@ -18,6 +18,7 @@ function SearchByCategory(props) {
   }, [dispatch]);
 
   const onSelect = (selectedKeysValue) => {
+    dispatch({ type: FILTER_BY_PAGE, payload: 1 });
     dispatch({ type: FILTER_BY_CATEGORY, payload: selectedKeysValue });
   };
 
