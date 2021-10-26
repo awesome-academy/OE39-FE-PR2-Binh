@@ -74,3 +74,10 @@ export const payOrderEmailTemplate = (order) => {
   </p>
   `;
 };
+
+export const forgotPasswordEmailTemplate = (user, href) => {
+  return `<p>Hey ${user.name.split(' ')[0].toString()}, There was a request for password reset. 
+  <a href=${href}>Click this link to reset the password </a>
+  </p>
+  <p>This token is valid for only 1 hour.</p>`;
+};

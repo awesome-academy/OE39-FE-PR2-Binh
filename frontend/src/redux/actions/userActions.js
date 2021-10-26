@@ -3,12 +3,18 @@ import { toast } from 'react-toastify';
 import catchErrors from '../../utils/catchErrors';
 import { userApiPath } from '../../utils/router';
 import {
+  USER_CHANGE_PASSWORD_FAIL,
+  USER_CHANGE_PASSWORD_REQUEST,
+  USER_CHANGE_PASSWORD_SUCCESS,
   USER_DELETE_FAIL,
   USER_DELETE_REQUEST,
   USER_DELETE_SUCCESS,
   USER_DETAILS_FAIL,
   USER_DETAILS_REQUEST,
   USER_DETAILS_SUCCESS,
+  USER_FORGOT_PASSWORD_FAIL,
+  USER_FORGOT_PASSWORD_REQUEST,
+  USER_FORGOT_PASSWORD_SUCCESS,
   USER_LIST_FAIL,
   USER_LIST_REQUEST,
   USER_LIST_SUCCESS,
@@ -153,5 +159,41 @@ export const updateUser = (user) => async (dispatch, getState) => {
   } catch (error) {
     dispatch({ type: USER_UPDATE_FAIL, payload: catchErrors(error) });
     toast.error('User updated fail');
+  }
+};
+
+export const forgotPassword = (email) => async (dispatch) => {
+  dispatch({ type: USER_FORGOT_PASSWORD_REQUEST, payload: email });
+  try {
+    const { data } = await Axios.post(
+      userApiPath('forgot'),
+      { email },
+      {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      }
+    );
+    dispatch({ type: USER_FORGOT_PASSWORD_SUCCESS, payload: data });
+    toast.success('Forgot password requested success');
+  } catch (error) {
+    dispatch({ type: USER_FORGOT_PASSWORD_FAIL, payload: catchErrors(error) });
+    toast.error('Forgot password requested fail');
+  }
+};
+
+export const resetPassword = (info) => async (dispatch) => {
+  dispatch({ type: USER_CHANGE_PASSWORD_REQUEST });
+  try {
+    const { data } = await Axios.post(userApiPath('reset'), info, {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+    dispatch({ type: USER_CHANGE_PASSWORD_SUCCESS, payload: data });
+    toast.success('Password reseted success');
+  } catch (error) {
+    dispatch({ type: USER_CHANGE_PASSWORD_FAIL, payload: catchErrors(error) });
+    toast.error('Password reseted fail');
   }
 };

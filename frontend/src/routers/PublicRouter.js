@@ -3,6 +3,7 @@ import { Route, Switch } from 'react-router-dom';
 
 import Layout from '../App';
 import CartScreen from '../screens/CartScreen';
+import ForgotPassword from '../screens/ForgotPassword';
 import HomeScreen from '../screens/HomeScreen';
 import NotFoundScreen from '../screens/NotFoundScreen';
 import ProductScreen from '../screens/ProductScreen';
@@ -14,6 +15,7 @@ function PublicRouter(props) {
     <Layout>
       <Switch>
         <Route exact path="/search" component={SearchScreen} />
+        <Route exact path="/forgot" component={ForgotPassword} />
         <Route exact path="/signin" component={SigninScreen} />
         <Route exact path="/cart" component={CartScreen} />
         <Route exact path="/product/:slug" component={ProductScreen} />
