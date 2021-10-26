@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import Lightbox from 'react-image-lightbox';
 import 'react-image-lightbox/style.css';
 import { SideBySideMagnifier } from 'react-image-magnifiers';
-import { renderBaseUrl } from '../../../utils/router';
 import SlickCarousel from '../../Features/SlickCarousel';
 
 function ProductGallery(props) {
@@ -56,8 +55,8 @@ function ProductGallery(props) {
                 key={index}
                 alwaysInPlace={true}
                 imageAlt="Product"
-                imageSrc={renderBaseUrl(image.url)}
-                largeImageSrc={renderBaseUrl(image.url)}
+                imageSrc={image}
+                largeImageSrc={image}
               />
             ))}
           </SlickCarousel>
@@ -80,7 +79,7 @@ function ProductGallery(props) {
                   className={`product__image-item ${photoMain === index ? 'active' : ''}`}
                 >
                   <div className="img-wrapper">
-                    <img src={renderBaseUrl(image.url)} alt="Product" />
+                    <img src={image} alt="Product" />
                   </div>
                 </button>
               )
@@ -89,8 +88,8 @@ function ProductGallery(props) {
           {product.images.length > 3 && (
             <button onClick={() => changeImage(3)} className={`product__image-item more `}>
               <div className="img-wrapper">
-                <img src={renderBaseUrl(product.images[3].url)} alt="Product" />
-                <span>See more 15 pictures</span>
+                <img src={product.images[3]} alt="Product" />
+                <span>{`See more ${product.images.length - 2} pictures`}</span>
               </div>
             </button>
           )}
@@ -99,11 +98,9 @@ function ProductGallery(props) {
 
       {isOpen && (
         <Lightbox
-          mainSrc={renderBaseUrl(product.images[photoIndex].url)}
-          nextSrc={renderBaseUrl(product.images[(photoIndex + 1) % product.images.length].url)}
-          prevSrc={renderBaseUrl(
-            product.images[(photoIndex + product.images.length - 1) % product.images.length].url
-          )}
+          mainSrc={product.images[photoIndex]}
+          nextSrc={product.images[(photoIndex + 1) % product.images.length]}
+          prevSrc={product.images[(photoIndex + product.images.length - 1) % product.images.length]}
           onCloseRequest={() => setIsOpen(false)}
           onMovePrevRequest={() =>
             setPhotoIndex((photoIndex + product.images.length - 1) % product.images.length)

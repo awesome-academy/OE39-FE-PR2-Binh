@@ -37,13 +37,21 @@ function ProductDetail(props) {
   };
 
   function scrollHandler() {
-    let sticky = ref.current.querySelector('.product__stick');
-    if (sticky.classList.contains('d-none') && ref.current.getBoundingClientRect().bottom < 0) {
+    let sticky = ref.current?.querySelector('.product__stick');
+    if (
+      sticky &&
+      sticky.classList.contains('d-none') &&
+      ref.current.getBoundingClientRect().bottom < 0
+    ) {
       sticky.classList.remove('d-none');
       return;
     }
 
-    if (!sticky.classList.contains('d-none') && ref.current.getBoundingClientRect().bottom > 0) {
+    if (
+      sticky &&
+      !sticky.classList.contains('d-none') &&
+      ref.current.getBoundingClientRect().bottom > 0
+    ) {
       sticky.classList.add('d-none');
     }
   }
@@ -60,7 +68,7 @@ function ProductDetail(props) {
         <div className="product__price">
           <span className="product__price-out">${product.price.toFixed(2)}</span>
         </div>
-      ) : product.salePrice >= 0 ? (
+      ) : product.salePrice && product.salePrice >= 0 ? (
         <div className="product__price">
           <span className="product__price-new">${product.salePrice.toFixed(2)}</span>
           <span className="product__price-old">${product.price.toFixed(2)}</span>

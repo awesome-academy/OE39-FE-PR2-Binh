@@ -25,6 +25,7 @@
 @import './components/page-header.scss';
 @import './components/tables.scss';
 @import './components/modals.scss';
+@import './components/steps.scss';
 
 @import 'layout/header';
 @import 'layout/footer';
@@ -33,3 +34,4 @@
 @import 'pages/product';
 @import 'pages/cart';
 @import 'pages/signin';
+@import 'pages/shipping';

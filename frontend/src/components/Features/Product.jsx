@@ -52,7 +52,7 @@ function Product({ product }) {
         <Link to={`/product/${product.slug}`}>
           <LazyLoadImage
             alt={product.name}
-            src={renderBaseUrl(product.images[0].url)}
+            src={product.images[0]}
             threshold={500}
             effect="black and white"
             wrapperClassName="product__image"
@@ -61,7 +61,7 @@ function Product({ product }) {
           {product.images.length >= 2 ? (
             <LazyLoadImage
               alt={product.name}
-              src={renderBaseUrl(product.images[1].url)}
+              src={product.images[1]}
               threshold={500}
               effect="black and white"
               wrapperClassName="product__image-hover"
@@ -115,7 +115,7 @@ function Product({ product }) {
           <div className="product__price">
             <span className="product__price-out">${product.price.toFixed(2)}</span>
           </div>
-        ) : product.salePrice >= 0 ? (
+        ) : product.salePrice && product.salePrice >= 0 ? (
           <div className="product__price">
             <span className="product__price-new">${product.salePrice.toFixed(2)}</span>
             <span className="product__price-old">${product.price.toFixed(2)}</span>
