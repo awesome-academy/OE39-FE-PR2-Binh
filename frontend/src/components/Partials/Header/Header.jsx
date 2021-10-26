@@ -6,6 +6,7 @@ import HeaderSticky from './HeaderSticky';
 import MainMenu from './MainMenu';
 import { Link } from 'react-router-dom';
 import { signout } from '../../../redux/actions/userActions';
+import { showSignInModal } from '../../../redux/actions/modalActions';
 
 function Header(props) {
   const dispatch = useDispatch();
@@ -15,6 +16,11 @@ function Header(props) {
   function handleSignOut(e) {
     e.preventDefault();
     dispatch(signout());
+  }
+
+  function onShowSignInModal(e) {
+    e.preventDefault();
+    dispatch(showSignInModal());
   }
 
   return (
@@ -95,7 +101,7 @@ function Header(props) {
                     </li>
                   ) : (
                     <li>
-                      <Link to="/signin">
+                      <Link to="/signin" onClick={onShowSignInModal}>
                         <i className="las la-user"></i>Login
                       </Link>
                     </li>

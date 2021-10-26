@@ -1,6 +1,7 @@
 import { createStore, compose, applyMiddleware, combineReducers } from 'redux';
 import thunk from 'redux-thunk';
 import { cartReducer } from './reducers/cartReducers';
+import { modalReducer } from './reducers/modalReducers';
 import {
   productDetailsReducer,
   productListReducer,
@@ -20,9 +21,14 @@ const initialState = {
       ? JSON.parse(localStorage.getItem('cartItems'))
       : [],
   },
+  modal: {
+    type: '',
+    showModal: false,
+  },
 };
 
 const reducer = combineReducers({
+  modal: modalReducer,
   cart: cartReducer,
   productList: productListReducer,
   productDetails: productDetailsReducer,
