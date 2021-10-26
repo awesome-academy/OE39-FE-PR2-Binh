@@ -2,7 +2,6 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import Rating from './Rating';
-import { renderBaseUrl } from '../../utils/router';
 import { useDispatch } from 'react-redux';
 import { addToCart } from '../../redux/actions/cartActions';
 import { showQuickViewModal } from '../../redux/actions/modalActions';

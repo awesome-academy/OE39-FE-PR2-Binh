@@ -44,10 +44,7 @@ function CartMenu(props) {
 
                   <figure className="product__cart-media">
                     <Link to={`/product/${cart.slug}`} className="product__cart-image">
-                      <img
-                        src={`${process.env.REACT_APP_BASE_URL}/${cart.images[0].url}`}
-                        alt="product"
-                      />
+                      <img src={cart.images[0]} alt="product" />
                     </Link>
                   </figure>
 

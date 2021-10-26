@@ -61,7 +61,7 @@ function ProductSticky(props) {
               >
                 <span>add to cart</span>
               </a>
-              <a href="/" className="btn-product btn-wishlist"></a>
+              <Link to="/" className="btn-product btn-wishlist"></Link>
             </div>
           </div>
         </div>
