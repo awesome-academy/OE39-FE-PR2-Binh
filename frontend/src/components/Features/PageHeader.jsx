@@ -6,7 +6,7 @@ function PageHeader(props) {
     <div
       className="page-header text-center"
       style={{
-        backgroundImage: 'url(images/page-header-bg.jpg)',
+        backgroundImage: `url(${process.env.REACT_APP_BASE_URL}/images/page-header-bg.jpg)`,
       }}
     >
       <div className="container">

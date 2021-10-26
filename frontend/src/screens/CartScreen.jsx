@@ -6,11 +6,13 @@ import Breadcrumb from '../components/Features/Breadcrumb';
 import PageHeader from '../components/Features/PageHeader';
 import Qty from '../components/Features/Qty';
 import { addToCart, removeFromCart } from '../redux/actions/cartActions';
+import { showSignInModal } from '../redux/actions/modalActions';
 import { renderBaseUrl } from '../utils/router';
 
 function CartScreen(props) {
   const dispatch = useDispatch();
   const { cartItems } = useSelector((state) => state.cart);
+  const { userInfo } = useSelector((state) => state.userSignin);
 
   const countItems = cartItems.reduce((acc, cur) => {
     return acc + cur.qty;
@@ -26,6 +28,16 @@ function CartScreen(props) {
 
   function changeQtyHandler(qty, product) {
     dispatch(addToCart(product, qty));
+  }
+
+  function checkoutHandler(e) {
+    e.preventDefault();
+
+    if (userInfo) {
+      props.history.push('/user/shipping');
+    } else {
+      dispatch(showSignInModal());
+    }
   }
 
   const breadcrumb = [
@@ -116,16 +128,16 @@ function CartScreen(props) {
                       <span>${cartTotal}</span>
                     </div>
                     <div className="cart__action mt-2">
-                      <a href="/" className="btn btn-outline-primary">
+                      <Link to="/" className="btn btn-outline-primary" onClick={checkoutHandler}>
                         PROCEED TO CHECKOUT
-                      </a>
+                      </Link>
 
-                      <a href="/" className="btn btn-outline-darker mt-1">
-                        CONTINUE SHOPPING{' '}
+                      <Link to="/" className="btn btn-outline-darker mt-1">
+                        CONTINUE SHOPPING
                         <span>
                           <i className="las la-sync"></i>
                         </span>
-                      </a>
+                      </Link>
                     </div>
                   </div>
                 </div>
