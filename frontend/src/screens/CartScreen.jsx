@@ -7,7 +7,6 @@ import PageHeader from '../components/Features/PageHeader';
 import Qty from '../components/Features/Qty';
 import { addToCart, removeFromCart } from '../redux/actions/cartActions';
 import { showSignInModal } from '../redux/actions/modalActions';
-import { renderBaseUrl } from '../utils/router';
 
 function CartScreen(props) {
   const dispatch = useDispatch();
@@ -82,7 +81,7 @@ function CartScreen(props) {
                                 <Link to={`product/${cart.slug}`}>
                                   <LazyLoadImage
                                     alt={'Products'}
-                                    src={renderBaseUrl(cart.images[0].url)}
+                                    src={cart.images[0]}
                                     threshold={500}
                                     effect="black and white"
                                   />

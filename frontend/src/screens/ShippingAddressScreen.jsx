@@ -76,6 +76,7 @@ function ShippingAddressScreen(props) {
     };
 
     dispatch(saveShippingAddress(shippingAddress));
+    props.history.push('/user/payment');
   }
 
   const breadcrumb = [
