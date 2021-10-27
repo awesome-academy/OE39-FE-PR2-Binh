@@ -1,0 +1,10 @@
+.alert {
+  position: relative;
+
+  .close {
+    position: absolute;
+    top: 50%;
+    right: 1rem;
+    transform: translateY(-50%);
+  }
+}
