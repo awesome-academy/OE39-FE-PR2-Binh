@@ -106,3 +106,12 @@ export const deliverOrder = async (req, res) => {
     return res.status(500).send({ message: 'An error occurred. Please try again later' });
   }
 };
+
+export const listOrderMine = async (req, res) => {
+  try {
+    const orders = await Order.find({ user: req.user._id });
+    return res.send(orders);
+  } catch (error) {
+    return res.status(500).send({ message: 'An error occurred. Please try again later' });
+  }
+};

@@ -14,6 +14,8 @@ import {
   ORDER_DELIVER_REQUEST,
   ORDER_DELIVER_SUCCESS,
   ORDER_DELIVER_FAIL,
+  ORDER_MINE_LIST_REQUEST,
+  ORDER_MINE_LIST_SUCCESS,
 } from '../constants/orderConstants';
 
 export const createOrder = (order) => async (dispatch, getState) => {
@@ -92,5 +94,22 @@ export const deliverOrder = (orderId) => async (dispatch, getState) => {
     dispatch({ type: ORDER_DELIVER_SUCCESS, payload: data });
   } catch (error) {
     dispatch({ type: ORDER_DELIVER_FAIL, payload: catchErrors(error) });
+  }
+};
+
+export const listOrderMine = () => async (dispatch, getState) => {
+  dispatch({ type: ORDER_MINE_LIST_REQUEST });
+  try {
+    const {
+      userSignin: { userInfo },
+    } = getState();
+    const { data } = await Axios.get(orderApiPath('mine'), {
+      headers: {
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    });
+    dispatch({ type: ORDER_MINE_LIST_SUCCESS, payload: data });
+  } catch (error) {
+    dispatch({ type: ORDER_MINE_LIST_SUCCESS, payload: catchErrors(error) });
   }
 };

@@ -87,15 +87,21 @@ function Header(props) {
                       </Link>
                       <ul className="header__menu">
                         <li>
-                          <a href="/">Profile</a>
+                          <Link to="/user">Dashboard</Link>
                         </li>
                         <li>
-                          <a href="/">Order history</a>
+                          <Link to="/user#tab-orders">Orders history</Link>
                         </li>
                         <li>
-                          <a href="/" onClick={handleSignOut}>
+                          <Link to="/user#tab-address">Addresses</Link>
+                        </li>
+                        <li>
+                          <Link to="/user#tab-account">Account Details</Link>
+                        </li>
+                        <li>
+                          <Link to="/" onClick={handleSignOut}>
                             Sign out
-                          </a>
+                          </Link>
                         </li>
                       </ul>
                     </li>
