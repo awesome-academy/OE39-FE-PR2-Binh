@@ -1,4 +1,6 @@
 .profile {
+  padding-bottom: 5rem;
+
   .nav-item {
     .nav-link {
       color: $dark-text;
@@ -15,8 +17,69 @@
     }
   }
 
-  .btn {
+  .btn-link {
     padding: 0;
     min-width: unset;
+  }
+
+  .avatar {
+    text-align: center;
+    position: relative;
+    width: 150px;
+    height: 150px;
+    margin: 0 auto;
+    cursor: pointer;
+
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      right: 0;
+      border-radius: 50%;
+      background-color: rgba($box-shadow-color, 0.4);
+      visibility: hidden;
+      opacity: 0;
+      z-index: 2;
+      transition: all 0.25s linear;
+    }
+
+    &:hover {
+      &::before {
+        visibility: visible;
+        opacity: 1;
+      }
+
+      .avatar__caption {
+        visibility: visible;
+        opacity: 1;
+      }
+    }
+
+    &__image {
+      display: inline-block;
+      border-radius: 50%;
+      width: 150px;
+      height: 150px;
+      object-fit: cover;
+      transition: all 0.25s linear;
+
+      &.highlight {
+        border: 1px solid $primary-color-dark;
+      }
+    }
+
+    &__caption {
+      position: absolute;
+      color: $white-color;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 3;
+      visibility: hidden;
+      opacity: 0;
+      transition: all 0.25s ease;
+    }
   }
 }

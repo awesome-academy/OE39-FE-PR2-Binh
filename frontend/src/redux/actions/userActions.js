@@ -3,6 +3,9 @@ import { toast } from 'react-toastify';
 import catchErrors from '../../utils/catchErrors';
 import { userApiPath } from '../../utils/router';
 import {
+  USER_DETAILS_FAIL,
+  USER_DETAILS_REQUEST,
+  USER_DETAILS_SUCCESS,
   USER_SIGNIN_FAIL,
   USER_SIGNIN_REQUEST,
   USER_SIGNIN_SUCCESS,
@@ -36,7 +39,7 @@ export const signout = () => (dispatch) => {
 export const signup = (user) => async (dispatch) => {
   dispatch({ type: USER_SIGNUP_REQUEST, payload: user });
   try {
-    const { data } = await Axios.post(`${process.env.REACT_APP_API_ENDPOINT}/users/signup`, user);
+    const { data } = await Axios.post(userApiPath('signup'), user);
     dispatch({ type: USER_SIGNUP_SUCCESS, payload: data });
     dispatch({ type: USER_SIGNIN_SUCCESS, payload: data });
     localStorage.setItem('userInfo', JSON.stringify(data));
@@ -47,5 +50,22 @@ export const signup = (user) => async (dispatch) => {
       payload: catchErrors(error),
     });
     toast.error('Signup fail');
+  }
+};
+
+export const detailsUser = (userId) => async (dispatch, getState) => {
+  dispatch({ type: USER_DETAILS_REQUEST, payload: userId });
+  try {
+    const {
+      userSignin: { userInfo },
+    } = getState();
+    const { data } = await Axios.get(userApiPath(userId), {
+      headers: {
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    });
+    dispatch({ type: USER_DETAILS_SUCCESS, payload: data });
+  } catch (error) {
+    dispatch({ type: USER_DETAILS_FAIL, payload: catchErrors(error) });
   }
 };

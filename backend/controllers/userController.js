@@ -78,3 +78,15 @@ export const signin = async (req, res) => {
     return res.status(500).send({ message: 'An error occurred. Please try again later' });
   }
 };
+
+export const userDetails = async (req, res) => {
+  try {
+    const user = await User.findById(req.params.userId);
+    if (!user) {
+      return res.status(404).send({ message: 'User Not Found' });
+    }
+    return res.send(user);
+  } catch (error) {
+    res.status(500).send({ message: 'An error occurred. Please try again later' });
+  }
+};
