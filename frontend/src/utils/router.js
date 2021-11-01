@@ -23,3 +23,7 @@ export const userApiPath = (slug = '') => {
 export const orderApiPath = (slug = '') => {
   return `${apiEndPoint}/orders/${slug}`;
 };
+
+export const uploadApiPath = (slug = '') => {
+  return `${apiEndPoint}/uploads/${slug}`;
+};

@@ -90,3 +90,44 @@ export const userDetails = async (req, res) => {
     res.status(500).send({ message: 'An error occurred. Please try again later' });
   }
 };
+
+export const updateUserProfile = async (req, res) => {
+  try {
+    const { name, email, avatar, currentPassword, newPassword } = req.body;
+    const user = await User.findById(req.user._id);
+
+    if (!isEmail(email)) {
+      return res.status(401).send({ message: 'Invalid Email' });
+    }
+
+    if (user && bcrypt.compareSync(currentPassword, user.password)) {
+      const checkEmail = await User.find({ email });
+
+      if (checkEmail.length > 1) {
+        return res.status(401).send({ message: 'Invalid Email' });
+      }
+
+      user.name = name || user.name;
+      user.email = email || user.email;
+      user.avatar = avatar || user.avatar;
+
+      if (newPassword) {
+        user.password = bcrypt.hashSync(newPassword, 10);
+      }
+
+      const updatedUser = await user.save();
+
+      res.send({
+        _id: updatedUser._id,
+        name: updatedUser.name,
+        email: updatedUser.email,
+        isAdmin: updatedUser.isAdmin,
+        token: generateToken(updatedUser),
+      });
+    } else {
+      return res.status(401).send({ message: 'Password Incorrect' });
+    }
+  } catch (error) {
+    res.status(500).send({ message: 'An error occurred. Please try again later' });
+  }
+};

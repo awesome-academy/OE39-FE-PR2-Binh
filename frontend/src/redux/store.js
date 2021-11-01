@@ -15,7 +15,13 @@ import {
   productListRelatedMoreReducer,
   productListRelatedReducer,
 } from './reducers/productReducers';
-import { userDetailsReducer, userSigninReducer, userSignUpReducer } from './reducers/userReducers';
+import { imageUploadReducer } from './reducers/uploadReducers';
+import {
+  userDetailsReducer,
+  userSigninReducer,
+  userSignUpReducer,
+  userUpdateProfileReducer,
+} from './reducers/userReducers';
 
 const initialState = {
   userSignin: {
@@ -42,6 +48,7 @@ const initialState = {
 
 const reducer = combineReducers({
   modal: modalReducer,
+  imageUpload: imageUploadReducer,
   cart: cartReducer,
   productList: productListReducer,
   productDetails: productDetailsReducer,
@@ -50,6 +57,7 @@ const reducer = combineReducers({
   userSignin: userSigninReducer,
   userSignup: userSignUpReducer,
   userDetails: userDetailsReducer,
+  userUpdateProfile: userUpdateProfileReducer,
   orderCreate: orderCreateReducer,
   orderDetails: orderDetailsReducer,
   orderPay: orderPayReducer,
