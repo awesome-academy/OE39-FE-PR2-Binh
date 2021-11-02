@@ -1,0 +1,43 @@
+#components-layout-demo-custom-trigger .trigger-dashboard {
+  padding: 0 24px;
+  font-size: 18px;
+  line-height: 64px;
+  cursor: pointer;
+  transition: color 0.3s;
+}
+
+#components-layout-demo-custom-trigger .trigger:hover {
+  color: $primary-color-dark;
+}
+
+.logo-dashboard {
+  height: 32px;
+  margin: 16px;
+  background: rgba($box-shadow-color, 0.09);
+
+  img {
+    margin: 0 auto;
+  }
+}
+
+.admin-layout {
+  &-header,
+  &-content {
+    background-color: $white-color;
+  }
+
+  &-header {
+    padding: 0;
+  }
+
+  &-content {
+    margin: 2.4rem 1.6rem 0 1.6rem;
+    padding: 2.4rem;
+    min-height: 28rem;
+  }
+}
+
+.trigger-dashboard {
+  margin-left: 2rem;
+  font-size: 2rem;
+}
