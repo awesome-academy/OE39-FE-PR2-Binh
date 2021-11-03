@@ -60,7 +60,7 @@ function DashboardScreen(props) {
             <Menu.Item key="3">Add post</Menu.Item>
           </SubMenu>
           <Menu.Item key="5" icon={<ApartmentOutlined />}>
-            <Link to="/admin">Categories</Link>
+            <Link to="/admin/categories">Categories</Link>
           </Menu.Item>
           <SubMenu key="sub3" icon={<FileImageOutlined />} title="Media">
             <Menu.Item key="6">All media</Menu.Item>

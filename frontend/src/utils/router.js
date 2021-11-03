@@ -27,3 +27,7 @@ export const orderApiPath = (slug = '') => {
 export const uploadApiPath = (slug = '') => {
   return `${apiEndPoint}/uploads/${slug}`;
 };
+
+export const categoryApiPath = (slug = '') => {
+  return `${apiEndPoint}/categories/${slug}`;
+};
