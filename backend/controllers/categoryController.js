@@ -74,22 +74,8 @@ export const getCategoryBySlug = async (req, res) => {
 
 export const getAllCategories = async (req, res) => {
   try {
-    const pageSize = Number(req.query.pageSize) || 10;
-    const page = Number(req.query.pageNumber) || 1;
-
-    const count = await Category.count({});
-
-    const categories = await Category.find({})
-      .skip(pageSize * (page - 1))
-      .limit(pageSize);
-
-    return res.send({
-      categories,
-      pageSize,
-      page,
-      pages: Math.ceil(count / pageSize),
-      totalRows: count,
-    });
+    const categories = await Category.find({});
+    return res.send(categories);
   } catch (error) {
     return res.status(500).send({ message: 'An error occurred. Please try again later' });
   }
