@@ -7,8 +7,12 @@ import {
   createCategory,
   detailsCategory,
   listCategories,
+  updateCategory,
 } from '../../../redux/actions/categoryActions';
-import { CATEGORY_CREATE_RESET } from '../../../redux/constants/categoryConstants';
+import {
+  CATEGORY_CREATE_RESET,
+  CATEGORY_UPDATE_RESET,
+} from '../../../redux/constants/categoryConstants';
 import { arrayToTree, changeArray } from '../../../utils';
 import MessageBox from '../../Features/MessageBox';
 
@@ -39,17 +43,26 @@ function CategoryForm(props) {
     category: categoryDetail,
   } = categoryDetails;
 
+  const categoryUpdate = useSelector((state) => state.categoryUpdate);
+  const { loading: loadingUpdate, error: errorUpdate, success: successUpdate } = categoryUpdate;
+
   const onFinish = (values) => {
-    dispatch(createCategory(values));
+    if (isAddMode) {
+      dispatch(createCategory(values));
+    } else {
+      dispatch(updateCategory(values, slug));
+    }
   };
 
   useEffect(() => {
     if (successCreate) {
-      setCategoryValues(initCategoryValues);
       dispatch({ type: CATEGORY_CREATE_RESET });
     }
+    if (successUpdate) {
+      dispatch({ type: CATEGORY_UPDATE_RESET });
+    }
     dispatch(listCategories(1, 100));
-  }, [dispatch, successCreate]);
+  }, [dispatch, successCreate, successUpdate]);
 
   useEffect(() => {
     if (!isAddMode) {
@@ -67,13 +80,19 @@ function CategoryForm(props) {
 
   const [form] = Form.useForm();
   useEffect(() => {
-    form.setFieldsValue(categoryValues);
-  }, [categoryValues, form]);
+    if (isAddMode || successCreate) {
+      setCategoryValues(initCategoryValues);
+      form.setFieldsValue(initCategoryValues);
+    } else {
+      form.setFieldsValue(categoryValues);
+    }
+  }, [categoryValues, form, isAddMode, successCreate]);
 
   return (
     <div>
       {errorCreate && <MessageBox variant="danger">{errorCreate}</MessageBox>}
       {errorDetails && <MessageBox variant="danger">{errorDetails}</MessageBox>}
+      {errorUpdate && <MessageBox variant="danger">{errorUpdate}</MessageBox>}
       {loadingDetails && (
         <div className="text-center">
           <Spin />
@@ -102,7 +121,7 @@ function CategoryForm(props) {
           <Input.TextArea />
         </Form.Item>
         <Form.Item>
-          <Button type="primary" htmlType="submit" loading={loadingCreate}>
+          <Button type="primary" htmlType="submit" loading={loadingCreate || loadingUpdate}>
             {isAddMode ? 'Create' : 'Update'}
           </Button>
         </Form.Item>
