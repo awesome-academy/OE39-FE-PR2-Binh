@@ -1,6 +1,7 @@
 import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
 import { Button, Popconfirm, Space, Table } from 'antd';
 import React, { useEffect, useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { listCategories } from '../../../redux/actions/categoryActions';
@@ -8,6 +9,7 @@ import { addKeyToObject } from '../../../utils';
 import MessageBox from '../../Features/MessageBox';
 
 function CategoryList(props) {
+  const history = useHistory();
   const [paginations, setPaginations] = useState({
     current: 1,
     pageSize: 10,
@@ -32,6 +34,10 @@ function CategoryList(props) {
 
   const handleDelete = (categoryId) => {
     console.log(categoryId);
+  };
+
+  const handleEdit = (slug) => {
+    history.push(`/admin/categories?edit=${slug}`);
   };
 
   const columns = [
@@ -61,7 +67,12 @@ function CategoryList(props) {
           <Popconfirm title="Sure to delete?" onConfirm={() => handleDelete(category._id)}>
             <Button type="danger" shape="circle" icon={<DeleteOutlined />} />
           </Popconfirm>
-          <Button type="primary" shape="circle" icon={<EditOutlined />} />
+          <Button
+            type="primary"
+            shape="circle"
+            icon={<EditOutlined />}
+            onClick={() => handleEdit(category.slug)}
+          />
         </Space>
       ),
     },

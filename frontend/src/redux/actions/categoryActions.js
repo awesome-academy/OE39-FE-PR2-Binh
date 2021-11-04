@@ -6,6 +6,9 @@ import {
   CATEGORY_CREATE_FAIL,
   CATEGORY_CREATE_REQUEST,
   CATEGORY_CREATE_SUCCESS,
+  CATEGORY_DETAILS_FAIL,
+  CATEGORY_DETAILS_REQUEST,
+  CATEGORY_DETAILS_SUCCESS,
   CATEGORY_LIST_FAIL,
   CATEGORY_LIST_REQUEST,
   CATEGORY_LIST_SUCCESS,
@@ -38,5 +41,15 @@ export const createCategory = (category) => async (dispatch, getState) => {
   } catch (error) {
     dispatch({ type: CATEGORY_CREATE_FAIL, payload: catchErrors(error) });
     toast.error('Category created fail');
+  }
+};
+
+export const detailsCategory = (slug) => async (dispatch) => {
+  dispatch({ type: CATEGORY_DETAILS_REQUEST, payload: slug });
+  try {
+    const { data } = await Axios.get(categoryApiPath(slug));
+    dispatch({ type: CATEGORY_DETAILS_SUCCESS, payload: data });
+  } catch (error) {
+    dispatch({ type: CATEGORY_DETAILS_FAIL, payload: catchErrors(error) });
   }
 };
