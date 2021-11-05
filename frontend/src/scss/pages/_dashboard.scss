@@ -66,3 +66,17 @@
     }
   }
 }
+
+.dashboard__product-form {
+  .ant-badge {
+    display: inline-block;
+
+    & + .ant-badge {
+      margin-right: 1.5rem;
+    }
+
+    &:first-child {
+      margin-right: 1.5rem;
+    }
+  }
+}
