@@ -3,8 +3,10 @@ import thunk from 'redux-thunk';
 import { cartReducer } from './reducers/cartReducers';
 import {
   categoryCreateReducer,
+  categoryDeleteReducer,
   categoryDetailsReducer,
   categoryListReducer,
+  categoryUpdateReducer,
 } from './reducers/categoryReducers';
 import { modalReducer } from './reducers/modalReducers';
 import {
@@ -71,6 +73,8 @@ const reducer = combineReducers({
   categoryList: categoryListReducer,
   categoryCreate: categoryCreateReducer,
   categoryDetails: categoryDetailsReducer,
+  categoryUpdate: categoryUpdateReducer,
+  categoryDelete: categoryDeleteReducer,
 });
 
 const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;

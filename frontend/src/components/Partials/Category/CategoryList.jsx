@@ -4,9 +4,10 @@ import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { listCategories } from '../../../redux/actions/categoryActions';
+import { deleteCategory, listCategories } from '../../../redux/actions/categoryActions';
 import { addKeyToObject } from '../../../utils';
 import MessageBox from '../../Features/MessageBox';
+import { CATEGORY_DELETE_RESET } from '../../../redux/constants/categoryConstants';
 
 function CategoryList(props) {
   const history = useHistory();
@@ -18,9 +19,15 @@ function CategoryList(props) {
   const categoryList = useSelector((state) => state.categoryList);
   const { loading, error, categories } = categoryList;
 
+  const categoryDelete = useSelector((state) => state.categoryDelete);
+  const { loading: loadingDelete, error: errorDelete, success: successDelete } = categoryDelete;
+
   useEffect(() => {
+    if (successDelete) {
+      dispatch({ type: CATEGORY_DELETE_RESET });
+    }
     dispatch(listCategories());
-  }, [dispatch]);
+  }, [dispatch, successDelete]);
 
   const rowSelection = {
     onChange: (selectedRowKeys, selectedRows) => {
@@ -32,8 +39,8 @@ function CategoryList(props) {
     setPaginations({ ...pagination, current: pagination.current });
   };
 
-  const handleDelete = (categoryId) => {
-    console.log(categoryId);
+  const handleDelete = (slug) => {
+    dispatch(deleteCategory(slug));
   };
 
   const handleEdit = (slug) => {
@@ -64,8 +71,13 @@ function CategoryList(props) {
       key: 'action',
       render: (category) => (
         <Space size="middle">
-          <Popconfirm title="Sure to delete?" onConfirm={() => handleDelete(category._id)}>
-            <Button type="danger" shape="circle" icon={<DeleteOutlined />} />
+          <Popconfirm title="Sure to delete?" onConfirm={() => handleDelete(category.slug)}>
+            <Button
+              type="danger"
+              shape="circle"
+              icon={<DeleteOutlined />}
+              loading={loadingDelete}
+            />
           </Popconfirm>
           <Button
             type="primary"
@@ -81,6 +93,7 @@ function CategoryList(props) {
   return (
     <div className="dashboard__category-list">
       {error && <MessageBox variant="danger">{error}</MessageBox>}
+      {errorDelete && <MessageBox variant="danger">{errorDelete}</MessageBox>}
       <Table
         dataSource={addKeyToObject(categories)}
         columns={columns}
