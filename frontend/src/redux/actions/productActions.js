@@ -18,6 +18,9 @@ import {
   PRODUCT_RELATED_LOADMORE_SUCCESS,
   PRODUCT_RELATED_REQUEST,
   PRODUCT_RELATED_SUCCESS,
+  PRODUCT_UPDATE_FAIL,
+  PRODUCT_UPDATE_REQUEST,
+  PRODUCT_UPDATE_SUCCESS,
 } from '../constants/productConstants';
 
 export const listProducts =
@@ -82,5 +85,22 @@ export const createProduct = (product) => async (dispatch, getState) => {
   } catch (error) {
     dispatch({ type: PRODUCT_CREATE_FAIL, payload: catchErrors(error) });
     toast.error('Product created fail');
+  }
+};
+
+export const updateProduct = (product, slug) => async (dispatch, getState) => {
+  dispatch({ type: PRODUCT_UPDATE_REQUEST, payload: product });
+  const {
+    userSignin: { userInfo },
+  } = getState();
+  try {
+    const { data } = await Axios.put(productApiPath(slug), product, {
+      headers: { Authorization: `Bearer ${userInfo.token}` },
+    });
+    dispatch({ type: PRODUCT_UPDATE_SUCCESS, payload: data });
+    toast.success('Product updated success');
+  } catch (error) {
+    dispatch({ type: PRODUCT_UPDATE_FAIL, payload: catchErrors(error) });
+    toast.error('Product updated fail');
   }
 };
