@@ -86,3 +86,11 @@
     text-transform: uppercase;
   }
 }
+
+.dashboard__product-list {
+  button {
+    span {
+      margin: 0;
+    }
+  }
+}
