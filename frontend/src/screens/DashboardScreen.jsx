@@ -71,7 +71,7 @@ function DashboardScreen(props) {
               <Link to="/admin">All product</Link>
             </Menu.Item>
             <Menu.Item key="9">
-              <Link to="/admin">Add product</Link>
+              <Link to="/admin/products/add">Add product</Link>
             </Menu.Item>
           </SubMenu>
           <Menu.Item key="12" icon={<PropertySafetyOutlined />}>
