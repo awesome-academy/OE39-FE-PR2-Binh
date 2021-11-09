@@ -27,10 +27,10 @@ function RecentProducts(props) {
       const { data } = await axios.get(
         `${process.env.REACT_APP_API_ENDPOINT}/products?category=${category}&pageNumber=${currPage}`
       );
-      if (data.length < 8) {
+      if (data.products.length < 8) {
         setHasMore(false);
       }
-      setProducts(data);
+      setProducts(data.products);
       setLoading(false);
     } catch (error) {
       setLoading(false);
@@ -52,10 +52,10 @@ function RecentProducts(props) {
           currPage + 1
         }`
       );
-      if (data.length < 8) {
+      if (data.products.length < 8) {
         setHasMore(false);
       }
-      setProducts((prev) => [...prev, ...data]);
+      setProducts((prev) => [...prev, ...data.products]);
       setCurrPage((prev) => prev + 1);
       setLoadMoreLoading(false);
     } catch (error) {

@@ -86,10 +86,16 @@ function ProductGallery(props) {
           )}
 
           {product.images.length > 3 && (
-            <button onClick={() => changeImage(3)} className={`product__image-item more `}>
+            <button
+              onClick={() => {
+                setIsOpen(true);
+                changeImage(3);
+              }}
+              className={`product__image-item more `}
+            >
               <div className="img-wrapper">
                 <img src={product.images[3]} alt="Product" />
-                <span>{`See more ${product.images.length - 2} pictures`}</span>
+                <span>{`See more ${product.images.length - 3} pictures`}</span>
               </div>
             </button>
           )}

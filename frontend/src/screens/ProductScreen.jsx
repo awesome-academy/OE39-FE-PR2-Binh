@@ -23,17 +23,6 @@ function ProductScreen(props) {
     error: errorRelated,
   } = productListRelated;
 
-  function scrollToTop() {
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth',
-    });
-  }
-
-  useEffect(() => {
-    scrollToTop();
-  }, [slug]);
-
   useEffect(() => {
     dispatch(listProductsRelated(slug));
     dispatch(detailsProduct(slug));

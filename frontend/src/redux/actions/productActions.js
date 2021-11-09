@@ -6,6 +6,9 @@ import {
   PRODUCT_CREATE_FAIL,
   PRODUCT_CREATE_REQUEST,
   PRODUCT_CREATE_SUCCESS,
+  PRODUCT_DELETE_FAIL,
+  PRODUCT_DELETE_REQUEST,
+  PRODUCT_DELETE_SUCCESS,
   PRODUCT_DETAILS_FAIL,
   PRODUCT_DETAILS_REQUEST,
   PRODUCT_DETAILS_SUCCESS,
@@ -24,13 +27,13 @@ import {
 } from '../constants/productConstants';
 
 export const listProducts =
-  ({ category = '' }) =>
+  ({ category = '', pageSize = 8, page = 1 }) =>
   async (dispatch) => {
-    dispatch({
-      type: PRODUCT_LIST_REQUEST,
-    });
+    dispatch({ type: PRODUCT_LIST_REQUEST });
     try {
-      const { data } = await Axios.get(productApiPath(`?category=${category}`));
+      const { data } = await Axios.get(
+        `${process.env.REACT_APP_API_ENDPOINT}/products?pageSize=${pageSize}&pageNumber=${page}&category=${category}`
+      );
       dispatch({ type: PRODUCT_LIST_SUCCESS, payload: data });
     } catch (error) {
       dispatch({ type: PRODUCT_LIST_FAIL, payload: catchErrors(error) });
@@ -102,5 +105,22 @@ export const updateProduct = (product, slug) => async (dispatch, getState) => {
   } catch (error) {
     dispatch({ type: PRODUCT_UPDATE_FAIL, payload: catchErrors(error) });
     toast.error('Product updated fail');
+  }
+};
+
+export const deleteProduct = (slug) => async (dispatch, getState) => {
+  dispatch({ type: PRODUCT_DELETE_REQUEST, payload: slug });
+  const {
+    userSignin: { userInfo },
+  } = getState();
+  try {
+    const { data } = Axios.delete(productApiPath(slug), {
+      headers: { Authorization: `Bearer ${userInfo.token}` },
+    });
+    dispatch({ type: PRODUCT_DELETE_SUCCESS, payload: data });
+    toast.success('Product deleted success');
+  } catch (error) {
+    dispatch({ type: PRODUCT_DELETE_FAIL, payload: catchErrors(error) });
+    toast.error('Product deleted fail');
   }
 };

@@ -50,7 +50,6 @@ function ProductAddEditScreen(props) {
   useEffect(() => {
     if (successCreate) {
       dispatch({ type: PRODUCT_CREATE_RESET });
-      setProductValues(initProductValues);
       props.history.push(`/admin/products/edit/${product.slug}`);
     }
 
@@ -91,8 +90,12 @@ function ProductAddEditScreen(props) {
 
   const [form] = Form.useForm();
   useEffect(() => {
+    if (isAddMode || successCreate) {
+      setProductValues(initProductValues);
+      setImages([]);
+    }
     form.setFieldsValue(productValues);
-  }, [productValues, form]);
+  }, [productValues, form, isAddMode, successCreate]);
 
   return (
     <div className="dashboard__product-form">

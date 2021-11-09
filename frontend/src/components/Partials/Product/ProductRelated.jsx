@@ -23,6 +23,7 @@ function ProductRelated(props) {
         setHasMore(false);
       }
       setProducts([...products, ...productsRelatedMore]);
+      dispatch({ type: PRODUCT_RELATED_LOADMORE_RESET });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [productsRelatedMore]);
@@ -31,7 +32,6 @@ function ProductRelated(props) {
     e.preventDefault();
     setCurrPage((prev) => prev + 1);
 
-    dispatch({ type: PRODUCT_RELATED_LOADMORE_RESET });
     dispatch(listProductsRelatedMore(props.product, currPage + 1));
   };
 

@@ -15,7 +15,7 @@ export const createSampleProducts = async (req, res) => {
 
 export const listProducts = async (req, res) => {
   try {
-    const pageSize = 8;
+    const pageSize = Number(req.query.pageSize) || 8;
     const page = Number(req.query.pageNumber) || 1;
 
     const category = req.query.category || '';
@@ -29,13 +29,24 @@ export const listProducts = async (req, res) => {
     const categoryFilter =
       category && category !== 'all' ? { categories: { $in: [categoryDB._id.toString()] } } : {};
 
+    const count = await Product.count({
+      ...categoryFilter,
+    });
+
     const products = await Product.find({
       ...categoryFilter,
     })
       .populate('categories')
       .skip(pageSize * (page - 1))
       .limit(pageSize);
-    res.send(products);
+
+    res.send({
+      products,
+      pageSize,
+      currentPage: page,
+      totalPages: Math.ceil(count / pageSize),
+      totalRows: count,
+    });
   } catch (error) {
     res.status(500).send({ message: 'No products found' });
   }
@@ -116,10 +127,6 @@ export const updateProduct = async (req, res) => {
       req.body.slug = slugify(name);
     } else {
       return res.status(401).send({ message: 'Name is require' });
-    }
-
-    if (!description || !brand || !price || !images || !countInStock) {
-      return res.status(401).send({ message: 'Some information is missing' });
     }
 
     if (price && salePrice) {

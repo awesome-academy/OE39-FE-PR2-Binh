@@ -68,7 +68,7 @@ function DashboardScreen(props) {
           </SubMenu>
           <SubMenu key="sub4" icon={<PushpinOutlined />} title="Products">
             <Menu.Item key="8">
-              <Link to="/admin">All product</Link>
+              <Link to="/admin/products">All product</Link>
             </Menu.Item>
             <Menu.Item key="9">
               <Link to="/admin/products/add">Add product</Link>
