@@ -3,6 +3,10 @@ import {
   ORDER_CREATE_REQUEST,
   ORDER_CREATE_RESET,
   ORDER_CREATE_SUCCESS,
+  ORDER_DELETE_FAIL,
+  ORDER_DELETE_REQUEST,
+  ORDER_DELETE_RESET,
+  ORDER_DELETE_SUCCESS,
   ORDER_DELIVER_FAIL,
   ORDER_DELIVER_REQUEST,
   ORDER_DELIVER_RESET,
@@ -10,6 +14,9 @@ import {
   ORDER_DETAILS_FAIL,
   ORDER_DETAILS_REQUEST,
   ORDER_DETAILS_SUCCESS,
+  ORDER_LIST_FAIL,
+  ORDER_LIST_REQUEST,
+  ORDER_LIST_SUCCESS,
   ORDER_MINE_LIST_FAIL,
   ORDER_MINE_LIST_REQUEST,
   ORDER_MINE_LIST_SUCCESS,
@@ -85,6 +92,43 @@ export const orderMineListReducer = (state = { loading: true, orders: [] }, acti
       return { loading: false, orders: action.payload };
     case ORDER_MINE_LIST_FAIL:
       return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+
+export const orderListReducer = (state = { orders: [] }, action) => {
+  switch (action.type) {
+    case ORDER_LIST_REQUEST:
+      return { loading: true };
+    case ORDER_LIST_SUCCESS:
+      return {
+        loading: false,
+        orders: action.payload.orders,
+        paginations: {
+          pageSize: action.payload.pageSize,
+          current: action.payload.currentPage,
+          totalPages: action.payload.totalPages,
+          total: action.payload.totalRows,
+        },
+      };
+    case ORDER_LIST_FAIL:
+      return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+
+export const orderDeleteReducer = (state = {}, action) => {
+  switch (action.type) {
+    case ORDER_DELETE_REQUEST:
+      return { loading: true };
+    case ORDER_DELETE_SUCCESS:
+      return { loading: false, success: true };
+    case ORDER_DELETE_FAIL:
+      return { loading: false, error: action.payload };
+    case ORDER_DELETE_RESET:
+      return {};
     default:
       return state;
   }

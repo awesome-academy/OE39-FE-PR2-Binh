@@ -11,8 +11,10 @@ import {
 import { modalReducer } from './reducers/modalReducers';
 import {
   orderCreateReducer,
+  orderDeleteReducer,
   orderDeliverReducer,
   orderDetailsReducer,
+  orderListReducer,
   orderMineListReducer,
   orderPayReducer,
 } from './reducers/orderReducers';
@@ -76,6 +78,8 @@ const reducer = combineReducers({
   orderPay: orderPayReducer,
   orderDeliver: orderDeliverReducer,
   orderMine: orderMineListReducer,
+  orderList: orderListReducer,
+  orderDelete: orderDeleteReducer,
   categoryList: categoryListReducer,
   categoryCreate: categoryCreateReducer,
   categoryDetails: categoryDetailsReducer,
