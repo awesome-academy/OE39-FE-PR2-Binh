@@ -16,6 +16,7 @@ import {
   PropertySafetyOutlined,
   LogoutOutlined,
 } from '@ant-design/icons';
+import OrderModal from '../components/Features/Modals/OrderModal';
 
 const { Header, Footer, Sider, Content } = Layout;
 const { SubMenu } = Menu;
@@ -101,6 +102,7 @@ function DashboardScreen(props) {
         <Footer style={{ textAlign: 'center' }}>
           Copyright © 2021 Molla Store. All Rights Reserved.
         </Footer>
+        <OrderModal />
       </Layout>
     </Layout>
   );
