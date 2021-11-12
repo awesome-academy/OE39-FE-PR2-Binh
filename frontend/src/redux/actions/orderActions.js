@@ -1,4 +1,5 @@
 import Axios from 'axios';
+import { toast } from 'react-toastify';
 import catchErrors from '../../utils/catchErrors';
 import { orderApiPath } from '../../utils/router';
 import {
@@ -77,8 +78,10 @@ export const paymentOrder = (orderId, paymentResult) => async (dispatch, getStat
       },
     });
     dispatch({ type: ORDER_PAY_SUCCESS, payload: data });
+    toast.success('Order paid success');
   } catch (error) {
     dispatch({ type: ORDER_PAY_FAIL, payload: catchErrors(error) });
+    toast.error('Order paid fail');
   }
 };
 
@@ -98,8 +101,10 @@ export const deliverOrder = (orderId) => async (dispatch, getState) => {
       }
     );
     dispatch({ type: ORDER_DELIVER_SUCCESS, payload: data });
+    toast.success('Order delivered success');
   } catch (error) {
     dispatch({ type: ORDER_DELIVER_FAIL, payload: catchErrors(error) });
+    toast.error('Order delivered fail');
   }
 };
 

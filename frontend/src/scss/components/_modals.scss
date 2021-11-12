@@ -9,6 +9,12 @@
   outline: 0;
   transform: translate(-50%, -50%);
   transition: all 0.8s ease-in-out;
+
+  h2 {
+    font-size: 1.8rem;
+    font-weight: 400;
+    margin-bottom: 1 rem;
+  }
 }
 
 .modal__content {

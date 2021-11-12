@@ -4,6 +4,7 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import MessageBox from '../components/Features/MessageBox';
+import { showOrderModal } from '../redux/actions/modalActions';
 import { deleteOrder, listOrders } from '../redux/actions/orderActions';
 import { ORDER_DELETE_RESET } from '../redux/constants/orderConstants';
 import { addKeyToObject } from '../utils';
@@ -16,12 +17,18 @@ function OrderListScreen(props) {
   const orderDelete = useSelector((state) => state.orderDelete);
   const { loading: loadingDelete, error: errorDelete, success: successDelete } = orderDelete;
 
+  const orderPay = useSelector((state) => state.orderPay);
+  const { success: successPay } = orderPay;
+
+  const orderDeliver = useSelector((state) => state.orderDeliver);
+  const { success: successDeliver } = orderDeliver;
+
   useEffect(() => {
     if (successDelete) {
       dispatch({ type: ORDER_DELETE_RESET });
     }
     dispatch(listOrders({}));
-  }, [dispatch, successDelete]);
+  }, [dispatch, successDelete, successPay, successDeliver]);
 
   const rowSelection = {
     onChange: (selectedRowKeys, selectedRows) => {
@@ -34,12 +41,11 @@ function OrderListScreen(props) {
   };
 
   const handleDelete = (orderId) => {
-    dispatch({ type: ORDER_DELETE_RESET });
     dispatch(deleteOrder(orderId));
   };
 
-  const handleEdit = (slug) => {
-    
+  const handleEdit = (orderId) => {
+    dispatch(showOrderModal(orderId));
   };
 
   const columns = [
@@ -110,7 +116,7 @@ function OrderListScreen(props) {
             type="primary"
             shape="circle"
             icon={<EditOutlined />}
-            // onClick={() => handleEdit(category.slug)}
+            onClick={() => handleEdit(order._id)}
           />
         </Space>
       ),
