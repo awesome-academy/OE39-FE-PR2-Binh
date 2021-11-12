@@ -5,8 +5,10 @@ import {
   signup,
   userDetails,
   updateUserProfile,
+  listUsers,
+  deleteUser,
 } from '../controllers/userController.js';
-import { isAuth } from '../utils/authMiddleware.js';
+import { isAdmin, isAuth } from '../utils/authMiddleware.js';
 
 const userRouter = express.Router();
 
@@ -24,5 +26,11 @@ userRouter.get('/:userId', isAuth, userDetails);
 
 // Update user profile
 userRouter.put('/profile', isAuth, updateUserProfile);
+
+// Get list user
+userRouter.get('/', isAuth, isAdmin, listUsers);
+
+// Delete order
+userRouter.delete('/:id', isAuth, isAdmin, deleteUser);
 
 export default userRouter;

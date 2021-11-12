@@ -16,7 +16,7 @@ export const createSampleUsers = async (req, res) => {
 
 export const signup = async (req, res) => {
   try {
-    const { name, email, password, isAdmin = false } = req.body;
+    const { name, email, password, isAdmin = false, avatar = 'avatar-default' } = req.body;
 
     if (!isEmail(email)) return res.status(401).send({ message: 'Invalid Email' });
 
@@ -33,6 +33,7 @@ export const signup = async (req, res) => {
     const user = new User({
       name: name,
       email: email.toLowerCase(),
+      avatar: avatar,
       isAdmin: isAdmin,
       password: bcrypt.hashSync(password, 10),
     });
@@ -129,5 +130,44 @@ export const updateUserProfile = async (req, res) => {
     }
   } catch (error) {
     res.status(500).send({ message: 'An error occurred. Please try again later' });
+  }
+};
+
+export const listUsers = async (req, res) => {
+  try {
+    const pageSize = Number(req.query.pageSize) || 10;
+    const page = Number(req.query.pageNumber) || 1;
+
+    const count = await User.count({});
+
+    const users = await User.find({})
+      .skip(pageSize * (page - 1))
+      .limit(pageSize);
+
+    res.send({
+      users,
+      pageSize,
+      currentPage: page,
+      totalPages: Math.ceil(count / pageSize),
+      totalRows: count,
+    });
+  } catch (error) {
+    return res.status(500).send({ message: 'An error occurred. Please try again later' });
+  }
+};
+
+export const deleteUser = async (req, res) => {
+  try {
+    const user = await User.findById(req.params.id);
+    if (!user) {
+      return res.status(404).send({ message: 'User Not Found' });
+    }
+    if (user.email === 'tranbinh241999@gmail.com') {
+      return res.status(400).send({ message: 'Can Not Delete This Admin' });
+    }
+    const deleted = await user.remove();
+    res.send({ message: 'User Deleted', user: deleted });
+  } catch (error) {
+    return res.status(500).send({ message: 'An error occurred. Please try again later' });
   }
 };

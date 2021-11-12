@@ -3,9 +3,15 @@ import { toast } from 'react-toastify';
 import catchErrors from '../../utils/catchErrors';
 import { userApiPath } from '../../utils/router';
 import {
+  USER_DELETE_FAIL,
+  USER_DELETE_REQUEST,
+  USER_DELETE_SUCCESS,
   USER_DETAILS_FAIL,
   USER_DETAILS_REQUEST,
   USER_DETAILS_SUCCESS,
+  USER_LIST_FAIL,
+  USER_LIST_REQUEST,
+  USER_LIST_SUCCESS,
   USER_SIGNIN_FAIL,
   USER_SIGNIN_REQUEST,
   USER_SIGNIN_SUCCESS,
@@ -91,5 +97,41 @@ export const updateUserProfile = (user) => async (dispatch, getState) => {
   } catch (error) {
     dispatch({ type: USER_UPDATE_PROFILE_FAIL, payload: catchErrors(error) });
     toast.error('Updated profile fail');
+  }
+};
+
+export const listUsers =
+  ({ pageSize = 10, page = 1 }) =>
+  async (dispatch, getState) => {
+    dispatch({ type: USER_LIST_REQUEST });
+    try {
+      const {
+        userSignin: { userInfo },
+      } = getState();
+      const { data } = await Axios.get(userApiPath(`?pageSize=${pageSize}&pageNumber=${page}`), {
+        headers: {
+          Authorization: `Bearer ${userInfo.token}`,
+        },
+      });
+      dispatch({ type: USER_LIST_SUCCESS, payload: data });
+    } catch (error) {
+      dispatch({ type: USER_LIST_FAIL, payload: catchErrors(error) });
+    }
+  };
+
+export const deleteUser = (userId) => async (dispatch, getState) => {
+  dispatch({ type: USER_DELETE_REQUEST, payload: userId });
+  const {
+    userSignin: { userInfo },
+  } = getState();
+  try {
+    const { data } = await Axios.delete(userApiPath(userId), {
+      headers: { Authorization: `Bearer ${userInfo.token}` },
+    });
+    dispatch({ type: USER_DELETE_SUCCESS, payload: data });
+    toast.success('User deleted success');
+  } catch (error) {
+    dispatch({ type: USER_DELETE_FAIL, payload: catchErrors(error) });
+    toast.error('User deleted fail');
   }
 };

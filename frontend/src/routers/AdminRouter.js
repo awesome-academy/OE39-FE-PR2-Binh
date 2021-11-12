@@ -6,12 +6,14 @@ import ManageCategoriesScreen from '../screens/ManageCategoriesScreen';
 import OrderListScreen from '../screens/OrderListScreen';
 import ProductAddEditScreen from '../screens/ProductAddEditScreen';
 import ProductListScreen from '../screens/ProductListScreen';
+import UserListScreen from '../screens/UserListScreen';
 import AdminRoute from './AdminRoute';
 
 function AdminRouter(props) {
   return (
     <LayoutDashboard>
       <Switch>
+        <AdminRoute exact path="/admin/users" component={UserListScreen} />
         <AdminRoute exact path="/admin/orders" component={OrderListScreen} />
         <AdminRoute exact path="/admin/products/edit/:slug" component={ProductAddEditScreen} />
         <AdminRoute exact path="/admin/products/add" component={ProductAddEditScreen} />

@@ -79,7 +79,7 @@ function DashboardScreen(props) {
             <Link to="/admin/orders">Orders</Link>
           </Menu.Item>
           <Menu.Item key="15" icon={<UserOutlined />}>
-            <Link to="/admin">Users</Link>
+            <Link to="/admin/users">Users</Link>
           </Menu.Item>
           <SubMenu key="sub5" icon={<PercentageOutlined />} title="Coupons">
             <Menu.Item key="10">All coupon</Menu.Item>

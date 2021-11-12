@@ -29,7 +29,9 @@ import {
 } from './reducers/productReducers';
 import { imageUploadReducer } from './reducers/uploadReducers';
 import {
+  userDeleteReducer,
   userDetailsReducer,
+  userListReducer,
   userSigninReducer,
   userSignUpReducer,
   userUpdateProfileReducer,
@@ -73,6 +75,8 @@ const reducer = combineReducers({
   userSignup: userSignUpReducer,
   userDetails: userDetailsReducer,
   userUpdateProfile: userUpdateProfileReducer,
+  userList: userListReducer,
+  userDelete: userDeleteReducer,
   orderCreate: orderCreateReducer,
   orderDetails: orderDetailsReducer,
   orderPay: orderPayReducer,
