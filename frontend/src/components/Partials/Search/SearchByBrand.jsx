@@ -2,7 +2,7 @@ import { Checkbox, Spin } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { listProductBrands } from '../../../redux/actions/productActions';
-import { FILTER_BY_BRAND } from '../../../redux/constants/filterContants';
+import { FILTER_BY_BRAND, FILTER_BY_PAGE } from '../../../redux/constants/filterContants';
 import MessageBox from '../../Features/MessageBox';
 
 function SearchByBrand(props) {
@@ -17,6 +17,8 @@ function SearchByBrand(props) {
   const brandWithSearch = brandSearch?.filter((brand) => brand.toLowerCase().includes(search));
 
   function onChange(e) {
+    dispatch({ type: FILTER_BY_PAGE, payload: 1 });
+
     const isCheck = e.target.checked;
     const value = e.target.value;
     const findIdx = filterBrand.findIndex((brand) => brand === value);

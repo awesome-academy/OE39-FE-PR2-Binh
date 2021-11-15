@@ -169,3 +169,62 @@ export const getListBrandProduct = async (req, res) => {
     return res.status(500).send({ message: 'An error occurred. Please try again later' });
   }
 };
+
+export const listProductSearch = async (req, res) => {
+  try {
+    const pageSize = Number(req.query.pageSize) || 9;
+    const page = Number(req.query.pageNumber) || 1;
+
+    const name = req.query.name || '';
+    const category = req.query.category || '';
+    const brand = req.query.brand || '';
+    const order = req.query.order || '';
+    const min = req.query.min && Number(req.query.min) !== 0 ? Number(req.query.min) : 0;
+    const max = req.query.max && Number(req.query.max) !== 0 ? Number(req.query.max) : 0;
+    const rating =
+      req.query.rating && Number(req.query.rating) !== 0 ? Number(req.query.rating) : 0;
+
+    const nameFilter = name ? { name: { $regex: name, $options: 'i' } } : {};
+    const categoryFilter = category ? { categories: category } : {};
+    const brandFilter = brand ? { brand } : {};
+    const priceFilter = min && max ? { price: { $gte: min, $lte: max } } : {};
+    const ratingFilter = rating ? { rating: { $gte: rating } } : {};
+    const sortOrder =
+      order === 'lowest'
+        ? { price: 1 }
+        : order === 'highest'
+        ? { price: -1 }
+        : order === 'toprated'
+        ? { rating: -1 }
+        : { _id: -1 };
+
+    const count = await Product.count({
+      ...nameFilter,
+      ...categoryFilter,
+      ...brandFilter,
+      ...priceFilter,
+      ...ratingFilter,
+    });
+
+    const products = await Product.find({
+      ...nameFilter,
+      ...categoryFilter,
+      ...brandFilter,
+      ...priceFilter,
+      ...ratingFilter,
+    })
+      .populate('categories')
+      .sort(sortOrder)
+      .skip(pageSize * (page - 1))
+      .limit(pageSize);
+    return res.send({
+      products,
+      page,
+      pages: Math.ceil(count / pageSize),
+      pageSize,
+      totalRows: count,
+    });
+  } catch (error) {
+    return res.status(500).send({ message: 'An error occurred. Please try again later' });
+  }
+};

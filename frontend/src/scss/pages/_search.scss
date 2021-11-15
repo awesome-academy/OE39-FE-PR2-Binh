@@ -31,5 +31,19 @@
       font-size: 1.6rem;
       font-weight: 500;
     }
+
+    .ratings__wrapper {
+      cursor: pointer;
+    }
+  }
+
+  &__main {
+    display: flex;
+    flex-direction: column;
+    min-height: 95rem;
+  }
+
+  &__paginations {
+    margin-top: auto !important;
   }
 }

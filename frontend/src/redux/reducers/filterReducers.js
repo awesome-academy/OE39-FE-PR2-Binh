@@ -3,14 +3,15 @@ import {
   FILTER_BY_CATEGORY,
   FILTER_BY_NAME,
   FILTER_BY_ORDER,
+  FILTER_BY_PAGE,
   FILTER_BY_PRICE,
   FILTER_BY_RATING,
+  FILTER_RESET,
 } from '../constants/filterContants';
 
 const initFilterState = {
   page: 1,
   filterCategory: [],
-  filterType: [],
   filterBrand: [],
   filterRating: 0,
   filterPrice: [0, 0],
@@ -50,6 +51,13 @@ export const filtersReducer = (state = initFilterState, action) => {
         ...state,
         orderBy: action.payload,
       };
+    case FILTER_BY_PAGE:
+      return {
+        ...state,
+        page: action.payload,
+      };
+    case FILTER_RESET:
+      return initFilterState;
     default:
       return state;
   }

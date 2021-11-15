@@ -1,7 +1,7 @@
 import { Input, Slider } from 'antd';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { FILTER_BY_PRICE } from '../../../redux/constants/filterContants';
+import { FILTER_BY_PAGE, FILTER_BY_PRICE } from '../../../redux/constants/filterContants';
 
 function SearchByPrice(props) {
   const { filterPrice } = useSelector((state) => state.filters);
@@ -9,6 +9,7 @@ function SearchByPrice(props) {
   const dispatch = useDispatch();
 
   function handleSlider(values) {
+    dispatch({ type: FILTER_BY_PAGE, payload: 1 });
     dispatch({ type: FILTER_BY_PRICE, payload: values });
   }
 
@@ -19,9 +20,11 @@ function SearchByPrice(props) {
         <Slider
           tipFormatter={(v) => `$${v}`}
           range
+          step={10}
           value={filterPrice}
           onChange={handleSlider}
           max="4999"
+          className="mb-2"
         />
 
         <Input.Group compact>
