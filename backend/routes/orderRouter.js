@@ -7,6 +7,7 @@ import {
   listOrderMine,
   getListOrders,
   deleteOrder,
+  summaryOrder,
 } from '../controllers/orderController.js';
 import { isAuth, isAdmin } from '../utils/authMiddleware.js';
 
@@ -14,6 +15,9 @@ const orderRouter = express.Router();
 
 // Get my order
 orderRouter.get('/mine', isAuth, listOrderMine);
+
+// Summary order
+orderRouter.get('/summary', isAuth, isAdmin, summaryOrder);
 
 // Create new order
 orderRouter.post('/', isAuth, createOrder);
