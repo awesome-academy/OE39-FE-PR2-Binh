@@ -3,6 +3,9 @@ import { toast } from 'react-toastify';
 import catchErrors from '../../utils/catchErrors';
 import { productApiPath } from '../../utils/router';
 import {
+  PRODUCT_BRAND_LIST_FAIL,
+  PRODUCT_BRAND_LIST_REQUEST,
+  PRODUCT_BRAND_LIST_SUCCESS,
   PRODUCT_CREATE_FAIL,
   PRODUCT_CREATE_REQUEST,
   PRODUCT_CREATE_SUCCESS,
@@ -122,5 +125,17 @@ export const deleteProduct = (slug) => async (dispatch, getState) => {
   } catch (error) {
     dispatch({ type: PRODUCT_DELETE_FAIL, payload: catchErrors(error) });
     toast.error('Product deleted fail');
+  }
+};
+
+export const listProductBrands = () => async (dispatch) => {
+  dispatch({
+    type: PRODUCT_BRAND_LIST_REQUEST,
+  });
+  try {
+    const { data } = await Axios.get(productApiPath('brands'));
+    dispatch({ type: PRODUCT_BRAND_LIST_SUCCESS, payload: data });
+  } catch (error) {
+    dispatch({ type: PRODUCT_BRAND_LIST_FAIL, payload: error.message });
   }
 };

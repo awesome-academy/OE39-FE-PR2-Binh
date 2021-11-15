@@ -7,6 +7,7 @@ import {
   createProduct,
   updateProduct,
   deleteProduct,
+  getListBrandProduct,
 } from '../controllers/productController.js';
 import { isAdmin, isAuth } from '../utils/authMiddleware.js';
 
@@ -14,6 +15,9 @@ const productRouter = express.Router();
 
 // Create sample products
 productRouter.get('/seed', createSampleProducts);
+
+// Get list brand
+productRouter.get('/brands', getListBrandProduct);
 
 // Get list product
 productRouter.get('/', listProducts);
