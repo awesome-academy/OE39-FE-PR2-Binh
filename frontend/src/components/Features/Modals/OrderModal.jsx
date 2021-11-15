@@ -33,7 +33,7 @@ function OrderModal(props) {
   const { loading: loadingDeliver, error: errorDeliver, success: successDeliver } = orderDeliver;
 
   useEffect(() => {
-    if (!order || successPay || successDeliver || (order && order._id !== orderId)) {
+    if (orderId && (!order || successPay || successDeliver || (order && order._id !== orderId))) {
       dispatch({ type: ORDER_PAY_RESET });
       dispatch({ type: ORDER_DELIVER_RESET });
       dispatch(detailsOrder(orderId));

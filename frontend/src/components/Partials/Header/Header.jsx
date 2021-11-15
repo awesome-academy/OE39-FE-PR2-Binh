@@ -120,19 +120,19 @@ function Header(props) {
                       </Link>
                       <ul className="header__menu">
                         <li>
-                          <a href="/">Dashboard</a>
+                          <Link to="/admin">Dashboard</Link>
                         </li>
                         <li>
-                          <a href="/">Products</a>
+                          <Link to="/admin/products">Products</Link>
                         </li>
                         <li>
-                          <a href="/">Orders</a>
+                          <Link to="/admin/orders">Orders</Link>
                         </li>
                         <li>
-                          <a href="/">Users</a>
+                          <Link to="//admin/users">Users</Link>
                         </li>
                         <li>
-                          <a href="/">Support</a>
+                          <Link to="/admin/supports">Support</Link>
                         </li>
                       </ul>
                     </li>

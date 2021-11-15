@@ -7,6 +7,7 @@ import {
   updateUserProfile,
   listUsers,
   deleteUser,
+  updateUser,
 } from '../controllers/userController.js';
 import { isAdmin, isAuth } from '../utils/authMiddleware.js';
 
@@ -32,5 +33,8 @@ userRouter.get('/', isAuth, isAdmin, listUsers);
 
 // Delete order
 userRouter.delete('/:id', isAuth, isAdmin, deleteUser);
+
+// Update order
+userRouter.put('/:id', isAuth, isAdmin, updateUser);
 
 export default userRouter;
