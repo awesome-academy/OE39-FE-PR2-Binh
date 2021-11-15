@@ -268,3 +268,100 @@ export const createReview = async (req, res) => {
     return res.status(500).send({ message: 'An error occurred. Please try again later' });
   }
 };
+
+export const updateReview = async (req, res) => {
+  try {
+    const userId = req.user._id;
+    const { productId, reviewId } = req.params;
+    const { rating, subject, description } = req.body;
+
+    if (!rating && !subject && !description) {
+      return res.status(401).send({ message: 'Some information is missing' });
+    }
+
+    const product = await Product.findById(productId);
+
+    if (!product) {
+      return res.status(404).send({ message: 'Product Not Found' });
+    }
+
+    const indexOf = product.reviews.map((review) => review._id.toString()).indexOf(reviewId);
+
+    if (indexOf === -1) {
+      return res.status(401).send({ message: 'Product not reviewed before' });
+    }
+
+    const updateReviewHandler = async () => {
+      product.reviews[indexOf].rating = rating || product.reviews[indexOf].rating;
+      product.reviews[indexOf].subject = subject || product.reviews[indexOf].subject;
+      product.reviews[indexOf].description = description || product.reviews[indexOf].description;
+
+      product.numReviews = product.reviews.length;
+      product.rating = product.reviews.reduce((a, c) => c.rating + a, 0) / product.reviews.length;
+
+      const updatedProduct = await product.save();
+      res.status(201).send({
+        message: 'Review Updated',
+        review: updatedProduct.reviews[indexOf],
+      });
+    };
+
+    if (product.reviews[indexOf].user.toString() !== userId) {
+      if (req.user.isAdmin) {
+        return await updateReviewHandler();
+      } else {
+        return res.status(401).send({ message: 'Unauthorized' });
+      }
+    }
+
+    return await updateReviewHandler();
+  } catch (error) {
+    console.log(error);
+    return res.status(500).send({ message: 'An error occurred. Please try again later' });
+  }
+};
+
+export const deleteReview = async (req, res) => {
+  try {
+    const userId = req.user._id;
+    const { productId, reviewId } = req.params;
+
+    const product = await Product.findById(productId);
+
+    if (!product) {
+      return res.status(404).send({ message: 'Product Not Found' });
+    }
+
+    const indexOf = product.reviews.map((review) => review._id.toString()).indexOf(reviewId);
+
+    if (indexOf === -1) {
+      return res.status(401).send({ message: 'Product not reviewed before' });
+    }
+
+    const deleteReviewHandler = async () => {
+      await product.reviews.splice(indexOf, 1);
+
+      product.numReviews = product.reviews.length;
+      product.rating =
+        product.numReviews > 0
+          ? product.reviews.reduce((a, c) => c.rating + a, 0) / product.reviews.length
+          : 0;
+
+      await product.save();
+      res.status(201).send({ message: 'Review deleted' });
+    };
+
+    if (product.reviews[indexOf].user.toString() !== userId) {
+      if (req.user.isAdmin) {
+        return await deleteReviewHandler();
+      } else {
+        return res.status(401).send({ message: 'Unauthorized' });
+      }
+    }
+
+    return await deleteReviewHandler();
+  } catch (error) {
+    console.log(error);
+    return res.status(500).send({ message: 'An error occurred. Please try again later' });
+  }
+};

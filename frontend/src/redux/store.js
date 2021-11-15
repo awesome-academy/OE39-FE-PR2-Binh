@@ -28,6 +28,8 @@ import {
   productListRelatedMoreReducer,
   productListRelatedReducer,
   productReviewCreateReducer,
+  productReviewDeleteReducer,
+  productReviewUpdateReducer,
   productSearchReducer,
   productUpdateReducer,
 } from './reducers/productReducers';
@@ -80,6 +82,8 @@ const reducer = combineReducers({
   productBrandList: productBrandListReducer,
   productSearch: productSearchReducer,
   productReviewCreate: productReviewCreateReducer,
+  productReviewUpdate: productReviewUpdateReducer,
+  productReviewDelete: productReviewDeleteReducer,
   userSignin: userSigninReducer,
   userSignup: userSignUpReducer,
   userDetails: userDetailsReducer,

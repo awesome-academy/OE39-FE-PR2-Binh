@@ -25,7 +25,11 @@ function Rating(props) {
 
       <span className="ratings__text">
         {caption ? <span>{caption}</span> : ''}
-        {numReviews ? <span>{`( ${numReviews} Reviews )`}</span> : ''}
+        {numReviews >= 0 ? (
+          <span>{`( ${numReviews} ${numReviews > 1 ? 'Reviews' : 'Review'} )`}</span>
+        ) : (
+          ''
+        )}
       </span>
     </div>
   );
