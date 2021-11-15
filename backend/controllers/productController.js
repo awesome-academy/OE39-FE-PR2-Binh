@@ -55,7 +55,9 @@ export const listProducts = async (req, res) => {
 export const detailsProduct = async (req, res) => {
   try {
     const slug = req.params.slug;
-    const product = await Product.findOne({ slug }).populate('categories');
+    const product = await Product.findOne({ slug })
+      .populate('categories')
+      .populate('reviews.user', 'name avatar');
     if (!product) {
       res.status(404).send({ message: 'No product found' });
     }
@@ -223,6 +225,44 @@ export const listProductSearch = async (req, res) => {
       pages: Math.ceil(count / pageSize),
       pageSize,
       totalRows: count,
+    });
+  } catch (error) {
+    return res.status(500).send({ message: 'An error occurred. Please try again later' });
+  }
+};
+
+export const createReview = async (req, res) => {
+  try {
+    const { rating, subject, description } = req.body;
+
+    if (!rating && !subject && !description) {
+      return res.status(401).send({ message: 'Some information is missing' });
+    }
+
+    const product = await Product.findById(req.params.id);
+
+    if (!product) {
+      return res.status(404).send({ message: 'Product Not Found' });
+    }
+
+    if (product.reviews.find((x) => String(x.user) === String(req.user._id))) {
+      return res.status(400).send({ message: 'You already submitted a review' });
+    }
+
+    const review = {
+      user: req.user._id,
+      rating: Number(rating),
+      subject,
+      description,
+    };
+
+    product.reviews.push(review);
+    product.numReviews = product.reviews.length;
+    product.rating = product.reviews.reduce((a, c) => c.rating + a, 0) / product.reviews.length;
+    const updatedProduct = await product.save();
+    res.status(201).send({
+      message: 'Review Created',
+      review: updatedProduct.reviews[updatedProduct.reviews.length - 1],
     });
   } catch (error) {
     return res.status(500).send({ message: 'An error occurred. Please try again later' });

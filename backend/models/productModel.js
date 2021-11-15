@@ -1,4 +1,17 @@
 import mongoose from 'mongoose';
+const { ObjectId } = mongoose.Schema;
+
+const reviewSchema = new mongoose.Schema(
+  {
+    user: { type: ObjectId, ref: 'User', required: true },
+    subject: { type: String, required: true },
+    description: { type: String, maxlength: 300, required: true },
+    rating: { type: Number, required: true },
+  },
+  {
+    timestamps: true,
+  }
+);
 
 const productSchema = new mongoose.Schema(
   {
@@ -35,6 +48,7 @@ const productSchema = new mongoose.Schema(
     countInStock: { type: Number, required: true },
     rating: { type: Number, default: 0 },
     numReviews: { type: Number, default: 0 },
+    reviews: [reviewSchema],
   },
   {
     timestamps: true,

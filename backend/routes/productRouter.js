@@ -9,6 +9,7 @@ import {
   deleteProduct,
   getListBrandProduct,
   listProductSearch,
+  createReview,
 } from '../controllers/productController.js';
 import { isAdmin, isAuth } from '../utils/authMiddleware.js';
 
@@ -22,6 +23,9 @@ productRouter.get('/brands', getListBrandProduct);
 
 // Get list product search
 productRouter.get('/search', listProductSearch);
+
+// create new review
+productRouter.post('/reviews/:id', isAuth, createReview);
 
 // Get list product
 productRouter.get('/', listProducts);

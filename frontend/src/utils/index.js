@@ -1,3 +1,6 @@
+import dayjs from 'dayjs';
+import relativeTime from 'dayjs/plugin/relativeTime';
+
 export const addKeyToObject = (array) => {
   return array?.map((obj) => ({
     key: obj._id,
@@ -39,6 +42,12 @@ export const changeArray = (arr, key = 'value') => {
   return arrNew;
 };
 
+export const calculateTime = (time) => {
+  dayjs.extend(relativeTime);
+  const timeFormat = dayjs(time).fromNow();
+  return timeFormat;
+};
+
 export const ratings = [
   {
     name: '4stars & up',
@@ -60,3 +69,29 @@ export const ratings = [
     rating: 1,
   },
 ];
+
+export const handleSubjectReview = (value) => {
+  let subject = '';
+  switch (value) {
+    case 1:
+      subject = 'Terrible';
+      break;
+    case 2:
+      subject = 'Bad';
+      break;
+    case 3:
+      subject = 'Normal';
+      break;
+    case 4:
+      subject = 'Good';
+      break;
+    case 5:
+      subject = 'Wonderful';
+      break;
+    default:
+      subject = 'Wonderful';
+      break;
+  }
+
+  return subject;
+};
