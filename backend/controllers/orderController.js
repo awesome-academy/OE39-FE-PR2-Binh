@@ -1,4 +1,5 @@
 import Order from '../models/orderModel.js';
+import { payOrderEmailTemplate, transporter } from '../utils/sendGrid.js';
 
 export const createOrder = async (req, res) => {
   try {
@@ -46,7 +47,7 @@ export const detailsOrder = async (req, res) => {
 
 export const paymentOrder = async (req, res) => {
   try {
-    const order = await Order.findById(req.params.id);
+    const order = await Order.findById(req.params.id).populate('user', 'email name');
 
     if (!order) {
       return res.status(404).send({ message: 'Order Not Found' });
@@ -68,6 +69,16 @@ export const paymentOrder = async (req, res) => {
         };
       }
       const updatedOrder = await order.save();
+
+      const mailOptions = {
+        to: order.user.email,
+        from: 'anhbinh2499@gmail.com',
+        subject: `New order ${order._id}`,
+        html: payOrderEmailTemplate(order),
+      };
+
+      transporter.sendMail(mailOptions, (err, info) => err && console.log(err));
+
       return res.send({ message: 'Order Paid', order: updatedOrder });
     };
 
@@ -81,6 +92,7 @@ export const paymentOrder = async (req, res) => {
 
     return await paymentHander();
   } catch (error) {
+    console.log(error);
     return res.status(500).send({ message: 'An error occurred. Please try again later' });
   }
 };
