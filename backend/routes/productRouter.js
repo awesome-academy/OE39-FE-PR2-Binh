@@ -10,6 +10,8 @@ import {
   getListBrandProduct,
   listProductSearch,
   createReview,
+  updateReview,
+  deleteReview,
 } from '../controllers/productController.js';
 import { isAdmin, isAuth } from '../utils/authMiddleware.js';
 
@@ -26,6 +28,12 @@ productRouter.get('/search', listProductSearch);
 
 // create new review
 productRouter.post('/reviews/:id', isAuth, createReview);
+
+// Update review
+productRouter.put('/reviews/:productId/:reviewId', isAuth, updateReview);
+
+// Delete review
+productRouter.delete('/reviews/:productId/:reviewId', isAuth, deleteReview);
 
 // Get list product
 productRouter.get('/', listProducts);

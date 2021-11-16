@@ -27,6 +27,14 @@ import {
   PRODUCT_REVIEW_CREATE_REQUEST,
   PRODUCT_REVIEW_CREATE_RESET,
   PRODUCT_REVIEW_CREATE_SUCCESS,
+  PRODUCT_REVIEW_DELETE_FAIL,
+  PRODUCT_REVIEW_DELETE_REQUEST,
+  PRODUCT_REVIEW_DELETE_RESET,
+  PRODUCT_REVIEW_DELETE_SUCCESS,
+  PRODUCT_REVIEW_UPDATE_FAIL,
+  PRODUCT_REVIEW_UPDATE_REQUEST,
+  PRODUCT_REVIEW_UPDATE_RESET,
+  PRODUCT_REVIEW_UPDATE_SUCCESS,
   PRODUCT_SEARCH_FAIL,
   PRODUCT_SEARCH_REQUEST,
   PRODUCT_SEARCH_SUCCESS,
@@ -194,6 +202,36 @@ export const productReviewCreateReducer = (state = {}, action) => {
     case PRODUCT_REVIEW_CREATE_FAIL:
       return { loading: false, error: action.payload };
     case PRODUCT_REVIEW_CREATE_RESET:
+      return {};
+    default:
+      return state;
+  }
+};
+
+export const productReviewUpdateReducer = (state = {}, action) => {
+  switch (action.type) {
+    case PRODUCT_REVIEW_UPDATE_REQUEST:
+      return { loading: true };
+    case PRODUCT_REVIEW_UPDATE_SUCCESS:
+      return { loading: false, success: true, review: action.payload };
+    case PRODUCT_REVIEW_UPDATE_FAIL:
+      return { loading: false, error: action.payload };
+    case PRODUCT_REVIEW_UPDATE_RESET:
+      return {};
+    default:
+      return state;
+  }
+};
+
+export const productReviewDeleteReducer = (state = {}, action) => {
+  switch (action.type) {
+    case PRODUCT_REVIEW_DELETE_REQUEST:
+      return { loading: true };
+    case PRODUCT_REVIEW_DELETE_SUCCESS:
+      return { loading: false, success: true, review: action.payload };
+    case PRODUCT_REVIEW_DELETE_FAIL:
+      return { loading: false, error: action.payload };
+    case PRODUCT_REVIEW_DELETE_RESET:
       return {};
     default:
       return state;

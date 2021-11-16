@@ -27,6 +27,12 @@ import {
   PRODUCT_REVIEW_CREATE_FAIL,
   PRODUCT_REVIEW_CREATE_REQUEST,
   PRODUCT_REVIEW_CREATE_SUCCESS,
+  PRODUCT_REVIEW_DELETE_FAIL,
+  PRODUCT_REVIEW_DELETE_REQUEST,
+  PRODUCT_REVIEW_DELETE_SUCCESS,
+  PRODUCT_REVIEW_UPDATE_FAIL,
+  PRODUCT_REVIEW_UPDATE_REQUEST,
+  PRODUCT_REVIEW_UPDATE_SUCCESS,
   PRODUCT_SEARCH_FAIL,
   PRODUCT_SEARCH_REQUEST,
   PRODUCT_SEARCH_SUCCESS,
@@ -207,5 +213,45 @@ export const createReview = (productId, review) => async (dispatch, getState) =>
   } catch (error) {
     dispatch({ type: PRODUCT_REVIEW_CREATE_FAIL, payload: catchErrors(error) });
     toast.error('Review created fail');
+  }
+};
+
+export const updateReview = (productId, reviewId, review) => async (dispatch, getState) => {
+  dispatch({ type: PRODUCT_REVIEW_UPDATE_REQUEST });
+  const {
+    userSignin: { userInfo },
+  } = getState();
+  try {
+    const { data } = await Axios.put(productApiPath(`reviews/${productId}/${reviewId}`), review, {
+      headers: { Authorization: `Bearer ${userInfo.token}` },
+    });
+    dispatch({
+      type: PRODUCT_REVIEW_UPDATE_SUCCESS,
+      payload: data.review,
+    });
+    toast.success('Review updated success');
+  } catch (error) {
+    dispatch({ type: PRODUCT_REVIEW_UPDATE_FAIL, payload: catchErrors(error) });
+    toast.error('Review updated fail');
+  }
+};
+
+export const deleteReview = (productId, reviewId) => async (dispatch, getState) => {
+  dispatch({ type: PRODUCT_REVIEW_DELETE_REQUEST });
+  const {
+    userSignin: { userInfo },
+  } = getState();
+  try {
+    const { data } = await Axios.delete(productApiPath(`reviews/${productId}/${reviewId}`), {
+      headers: { Authorization: `Bearer ${userInfo.token}` },
+    });
+    dispatch({
+      type: PRODUCT_REVIEW_DELETE_SUCCESS,
+      payload: data,
+    });
+    toast.success('Review deleted success');
+  } catch (error) {
+    dispatch({ type: PRODUCT_REVIEW_DELETE_FAIL, payload: catchErrors(error) });
+    toast.error('Review deleted fail');
   }
 };
