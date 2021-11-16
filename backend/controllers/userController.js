@@ -1,8 +1,13 @@
 import bcrypt from 'bcryptjs';
+import crypto from 'crypto';
+import dotenv from 'dotenv';
 import isEmail from 'validator/lib/isEmail.js';
 import data from '../data.js';
 import User from '../models/userModel.js';
 import { generateToken } from '../utils/authMiddleware.js';
+import { transporter, forgotPasswordEmailTemplate } from '../utils/sendGrid.js';
+
+dotenv.config();
 
 export const createSampleUsers = async (req, res) => {
   try {
@@ -188,6 +193,81 @@ export const updateUser = async (req, res) => {
     const updated = await user.save();
     res.send({ message: 'User Updated', user: updated });
   } catch (error) {
+    return res.status(500).send({ message: 'An error occurred. Please try again later' });
+  }
+};
+
+export const forgotPassword = async (req, res) => {
+  try {
+    const { email } = req.body;
+
+    if (!isEmail(email)) {
+      return res.status(401).send({ message: 'Invalid Email' });
+    }
+
+    const user = await User.findOne({ email: email.toLowerCase() });
+
+    if (!user) {
+      return res.status(404).send({ message: 'User Not Found' });
+    }
+
+    const token = crypto.randomBytes(32).toString('hex');
+
+    user.resetToken = token;
+    user.expireToken = Date.now() + 3600000;
+
+    await user.save();
+
+    const href = `${process.env.BASE_URL_FRONTEND}/forgot?token=${token}`;
+
+    const mailOptions = {
+      to: user.email,
+      from: 'anhbinh2499@gmail.com',
+      subject: 'Hi there! Password reset request',
+      html: forgotPasswordEmailTemplate(user, href),
+    };
+
+    transporter.sendMail(mailOptions, (err, info) => err && console.log(err));
+
+    return res.status(200).send({ message: 'Email sent successfully' });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).send({ message: 'An error occurred. Please try again later' });
+  }
+};
+
+export const resetPassword = async (req, res) => {
+  try {
+    const { token, password } = req.body;
+
+    if (!token) {
+      return res.status(401).send({ message: 'Unauthorized' });
+    }
+
+    if (password.length < 6) {
+      return res.status(401).send({ message: 'Password must be atleast 6 characters' });
+    }
+
+    const user = await User.findOne({ resetToken: token });
+
+    if (!user) {
+      return res.status(404).send({ message: 'Token incorrect' });
+    }
+
+    if (Date.now() > user.expireToken) {
+      return res.status(401).send({ message: 'Token expired, generate new one' });
+    }
+
+    user.password = await bcrypt.hash(password, 10);
+
+    user.resetToken = '';
+    user.expireToken = undefined;
+
+    await user.save();
+
+    return res.status(200).send({ message: 'Password updated' });
+  } catch (error) {
+    console.log(error);
     return res.status(500).send({ message: 'An error occurred. Please try again later' });
   }
 };

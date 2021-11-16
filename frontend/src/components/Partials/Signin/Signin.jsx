@@ -1,5 +1,6 @@
 import React, { useMemo, useState } from 'react';
 import { toast } from 'react-toastify';
+import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { signin } from '../../../redux/actions/userActions';
 import handleError from '../../../utils/handleError';
@@ -108,7 +109,7 @@ function Signin(props) {
             ></span>
           )}
         </button>
-        <a href="/">Forgot Your Password?</a>
+        <Link to="/forgot">Forgot Your Password?</Link>
       </div>
     </form>
   );
