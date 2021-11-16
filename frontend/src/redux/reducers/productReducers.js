@@ -23,6 +23,10 @@ import {
   PRODUCT_RELATED_LOADMORE_SUCCESS,
   PRODUCT_RELATED_REQUEST,
   PRODUCT_RELATED_SUCCESS,
+  PRODUCT_REVIEW_CREATE_FAIL,
+  PRODUCT_REVIEW_CREATE_REQUEST,
+  PRODUCT_REVIEW_CREATE_RESET,
+  PRODUCT_REVIEW_CREATE_SUCCESS,
   PRODUCT_SEARCH_FAIL,
   PRODUCT_SEARCH_REQUEST,
   PRODUCT_SEARCH_SUCCESS,
@@ -176,6 +180,21 @@ export const productSearchReducer = (state = { loading: true, products: [] }, ac
       };
     case PRODUCT_SEARCH_FAIL:
       return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+
+export const productReviewCreateReducer = (state = {}, action) => {
+  switch (action.type) {
+    case PRODUCT_REVIEW_CREATE_REQUEST:
+      return { loading: true };
+    case PRODUCT_REVIEW_CREATE_SUCCESS:
+      return { loading: false, success: true, review: action.payload };
+    case PRODUCT_REVIEW_CREATE_FAIL:
+      return { loading: false, error: action.payload };
+    case PRODUCT_REVIEW_CREATE_RESET:
+      return {};
     default:
       return state;
   }

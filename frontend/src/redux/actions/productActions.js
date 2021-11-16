@@ -24,6 +24,9 @@ import {
   PRODUCT_RELATED_LOADMORE_SUCCESS,
   PRODUCT_RELATED_REQUEST,
   PRODUCT_RELATED_SUCCESS,
+  PRODUCT_REVIEW_CREATE_FAIL,
+  PRODUCT_REVIEW_CREATE_REQUEST,
+  PRODUCT_REVIEW_CREATE_SUCCESS,
   PRODUCT_SEARCH_FAIL,
   PRODUCT_SEARCH_REQUEST,
   PRODUCT_SEARCH_SUCCESS,
@@ -139,7 +142,7 @@ export const listProductBrands = () => async (dispatch) => {
     const { data } = await Axios.get(productApiPath('brands'));
     dispatch({ type: PRODUCT_BRAND_LIST_SUCCESS, payload: data });
   } catch (error) {
-    dispatch({ type: PRODUCT_BRAND_LIST_FAIL, payload: error.message });
+    dispatch({ type: PRODUCT_BRAND_LIST_FAIL, payload: catchErrors(error) });
   }
 };
 
@@ -184,5 +187,25 @@ export const listProductSearch = () => async (dispatch, getState) => {
     dispatch({ type: PRODUCT_SEARCH_SUCCESS, payload: data });
   } catch (error) {
     dispatch({ type: PRODUCT_SEARCH_FAIL, payload: catchErrors(error) });
+  }
+};
+
+export const createReview = (productId, review) => async (dispatch, getState) => {
+  dispatch({ type: PRODUCT_REVIEW_CREATE_REQUEST });
+  const {
+    userSignin: { userInfo },
+  } = getState();
+  try {
+    const { data } = await Axios.post(productApiPath(`reviews/${productId}`), review, {
+      headers: { Authorization: `Bearer ${userInfo.token}` },
+    });
+    dispatch({
+      type: PRODUCT_REVIEW_CREATE_SUCCESS,
+      payload: data.review,
+    });
+    toast.success('Review created success');
+  } catch (error) {
+    dispatch({ type: PRODUCT_REVIEW_CREATE_FAIL, payload: catchErrors(error) });
+    toast.error('Review created fail');
   }
 };

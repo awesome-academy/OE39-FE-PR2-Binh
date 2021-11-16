@@ -43,6 +43,7 @@ export const signup = async (req, res) => {
       _id: createdUser._id,
       name: createdUser.name,
       email: createdUser.email,
+      avatar: createdUser.avatar,
       isAdmin: createdUser.isAdmin,
       token: generateToken(createdUser),
     });
@@ -69,6 +70,7 @@ export const signin = async (req, res) => {
           _id: user._id,
           name: user.name,
           email: user.email,
+          avatar: user.avatar,
           isAdmin: user.isAdmin,
           token: generateToken(user),
         });
@@ -122,6 +124,7 @@ export const updateUserProfile = async (req, res) => {
         _id: updatedUser._id,
         name: updatedUser.name,
         email: updatedUser.email,
+        avatar: updatedUser.avatar,
         isAdmin: updatedUser.isAdmin,
         token: generateToken(updatedUser),
       });

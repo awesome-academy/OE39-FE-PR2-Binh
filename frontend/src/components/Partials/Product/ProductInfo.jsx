@@ -50,7 +50,7 @@ function ProductInfo(props) {
             </div>
           </TabPanel>
           <TabPanel className="tab-pane fade">
-            <ProductReviews />
+            <ProductReviews product={product} />
           </TabPanel>
         </div>
       </Tabs>
