@@ -18,6 +18,7 @@ import {
   orderListReducer,
   orderMineListReducer,
   orderPayReducer,
+  orderSummaryReducer,
 } from './reducers/orderReducers';
 import {
   productBrandListReducer,
@@ -102,6 +103,7 @@ const reducer = combineReducers({
   orderMine: orderMineListReducer,
   orderList: orderListReducer,
   orderDelete: orderDeleteReducer,
+  orderSummary: orderSummaryReducer,
   categoryList: categoryListReducer,
   categoryCreate: categoryCreateReducer,
   categoryDetails: categoryDetailsReducer,

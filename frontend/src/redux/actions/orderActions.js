@@ -23,6 +23,9 @@ import {
   ORDER_DELETE_REQUEST,
   ORDER_DELETE_SUCCESS,
   ORDER_DELETE_FAIL,
+  ORDER_SUMMARY_REQUEST,
+  ORDER_SUMMARY_SUCCESS,
+  ORDER_SUMMARY_FAIL,
 } from '../constants/orderConstants';
 
 export const createOrder = (order) => async (dispatch, getState) => {
@@ -154,5 +157,20 @@ export const deleteOrder = (orderId) => async (dispatch, getState) => {
     dispatch({ type: ORDER_DELETE_SUCCESS, payload: data });
   } catch (error) {
     dispatch({ type: ORDER_DELETE_FAIL, payload: catchErrors(error) });
+  }
+};
+
+export const summaryOrder = () => async (dispatch, getState) => {
+  dispatch({ type: ORDER_SUMMARY_REQUEST });
+  const {
+    userSignin: { userInfo },
+  } = getState();
+  try {
+    const { data } = await Axios.get(orderApiPath('summary'), {
+      headers: { Authorization: `Bearer ${userInfo.token}` },
+    });
+    dispatch({ type: ORDER_SUMMARY_SUCCESS, payload: data });
+  } catch (error) {
+    dispatch({ type: ORDER_SUMMARY_FAIL, payload: catchErrors(error) });
   }
 };

@@ -1,4 +1,6 @@
 import Order from '../models/orderModel.js';
+import Product from '../models/productModel.js';
+import User from '../models/userModel.js';
 import { payOrderEmailTemplate, transporter } from '../utils/sendGrid.js';
 
 export const createOrder = async (req, res) => {
@@ -161,6 +163,107 @@ export const deleteOrder = async (req, res) => {
     const deleteOrder = await order.remove();
     return res.send({ message: 'Order Deleted', order: deleteOrder });
   } catch (error) {
+    return res.status(500).send({ message: 'An error occurred. Please try again later' });
+  }
+};
+
+export const summaryOrder = async (req, res) => {
+  try {
+    const orders = await Order.aggregate([
+      {
+        $group: {
+          _id: null,
+          numOrders: { $sum: 1 },
+          totalSales: { $sum: '$totalPrice' },
+        },
+      },
+    ]);
+
+    const users = await User.aggregate([
+      {
+        $group: {
+          _id: null,
+          numUsers: { $sum: 1 },
+        },
+      },
+    ]);
+
+    const dailyOrders = await Order.aggregate([
+      {
+        $group: {
+          _id: { $dateToString: { format: '%Y-%m-%d', date: '$createdAt' } },
+          orders: { $sum: 1 },
+        },
+      },
+      {
+        $project: {
+          _id: 1,
+          value: '$orders',
+          category: 'Orders',
+        },
+      },
+    ]);
+
+    const dailySales = await Order.aggregate([
+      {
+        $group: {
+          _id: { $dateToString: { format: '%Y-%m-%d', date: '$createdAt' } },
+          sales: { $sum: '$totalPrice' },
+        },
+      },
+      {
+        $project: {
+          _id: 1,
+          value: '$sales',
+          category: 'Sales',
+        },
+      },
+      { $sort: { _id: 1 } },
+    ]);
+
+    const productBrands = await Product.aggregate([
+      {
+        $group: {
+          _id: '$brand',
+          count: { $sum: 1 },
+        },
+      },
+    ]);
+
+    const productCategories = await Product.aggregate([
+      {
+        $lookup: {
+          from: 'categories',
+          localField: 'categories',
+          foreignField: '_id',
+          as: 'category',
+        },
+      },
+      {
+        $project: {
+          category: 1,
+        },
+      },
+      {
+        $unwind: '$category',
+      },
+      {
+        $group: {
+          _id: '$category.name',
+          count: { $sum: 1 },
+        },
+      },
+    ]);
+
+    res.send({
+      users,
+      orders,
+      summaryOrders: [...dailyOrders, ...dailySales],
+      productBrands,
+      productCategories,
+    });
+  } catch (error) {
+    console.log(error);
     return res.status(500).send({ message: 'An error occurred. Please try again later' });
   }
 };

@@ -96,3 +96,65 @@
     }
   }
 }
+
+.summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: $white-color;
+  padding: 1.5rem 1.25rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 0.15rem 1.75rem 0 rgba($box-shadow-color, 0.15);
+  cursor: pointer;
+  transition: all 0.2s linear;
+
+  &:hover {
+    background-color: $primary-color;
+  }
+
+  &--primary {
+    background-color: $bg-summary-primary;
+  }
+
+  &--success {
+    background-color: $bg-summary-success;
+  }
+
+  &--info {
+    background-color: $bg-summary-info;
+  }
+
+  &__section {
+    margin-top: 2rem;
+  }
+
+  &__title {
+    font-size: 2.8rem;
+    font-weight: 500;
+  }
+
+  &__content {
+    width: 80%;
+  }
+
+  &__caption {
+    font-size: 1.8rem;
+    margin-bottom: 0.5rem;
+    color: $white-color;
+    opacity: 0.9;
+  }
+
+  &__count {
+    color: $white-color;
+    font-size: 2.5rem;
+    font-weight: 500;
+  }
+
+  &__icon {
+    font-size: 3.5rem;
+  }
+
+  .ant-spin-dot-item {
+    background-color: $white-color;
+  }
+}
